@@ -1,7 +1,8 @@
-package ru.otus.basicarchitecture
+package ru.otus.basicarchitecture.results
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import ru.otus.basicarchitecture.data.WizardCache
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject
@@ -15,7 +16,7 @@ class ResultsViewModel @Inject constructor(
         wizardCache.name,
         wizardCache.surname,
         wizardCache.birthdate?.let { dateFormat.format(it) } ?: "",
-        "${wizardCache.country}, ${wizardCache.city}, ${wizardCache.address}",
+        wizardCache.address,
         wizardCache.interests
     ))
     val results: LiveData<Results> = _results

@@ -1,7 +1,8 @@
-package ru.otus.basicarchitecture
+package ru.otus.basicarchitecture.interests
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import ru.otus.basicarchitecture.data.WizardCache
 import javax.inject.Inject
 
 class InterestsViewModel @Inject constructor(

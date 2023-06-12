@@ -1,10 +1,13 @@
-package ru.otus.basicarchitecture
+package ru.otus.basicarchitecture.interests
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import ru.otus.basicarchitecture.R
+import ru.otus.basicarchitecture.results.ResultsFragment
+import ru.otus.basicarchitecture.widget.TagsView
 import javax.inject.Inject
 
 @AndroidEntryPoint

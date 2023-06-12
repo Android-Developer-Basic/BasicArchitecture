@@ -1,7 +1,8 @@
-package ru.otus.basicarchitecture
+package ru.otus.basicarchitecture.personal
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import ru.otus.basicarchitecture.data.WizardCache
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

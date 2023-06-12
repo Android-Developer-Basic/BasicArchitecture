@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture
+package ru.otus.basicarchitecture.data
 
 import dagger.hilt.android.scopes.ActivityScoped
 import java.util.Date
@@ -9,8 +9,6 @@ class WizardCache @Inject constructor() {
     var name: String = ""
     var surname: String = ""
     var birthdate: Date? = null
-    var country: String = ""
-    var city: String = ""
     var address: String = ""
     var interests: List<String> = listOf()
 }

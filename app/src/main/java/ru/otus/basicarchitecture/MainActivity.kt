@@ -3,6 +3,7 @@ package ru.otus.basicarchitecture
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
+import ru.otus.basicarchitecture.personal.PersonalInfoFormFragment
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

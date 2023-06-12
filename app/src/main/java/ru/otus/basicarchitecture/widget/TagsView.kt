@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture
+package ru.otus.basicarchitecture.widget
 
 import android.content.Context
 import android.graphics.Color
@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.constraintlayout.helper.widget.Flow
 import androidx.constraintlayout.widget.ConstraintLayout
+import ru.otus.basicarchitecture.R
 
 class TagsView @JvmOverloads constructor(
     context: Context,

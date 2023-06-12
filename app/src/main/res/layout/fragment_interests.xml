@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".InterestsFragment"
+    tools:context=".interests.InterestsFragment"
     android:padding="16dp">
 
-    <ru.otus.basicarchitecture.TagsView
+    <ru.otus.basicarchitecture.widget.TagsView
         android:id="@+id/tags"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

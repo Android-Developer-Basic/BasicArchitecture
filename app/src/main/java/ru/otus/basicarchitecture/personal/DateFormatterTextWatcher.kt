@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture
+package ru.otus.basicarchitecture.personal
 
 import android.graphics.Canvas
 import android.graphics.Paint
