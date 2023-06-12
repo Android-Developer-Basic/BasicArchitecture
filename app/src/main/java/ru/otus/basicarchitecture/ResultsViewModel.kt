@@ -15,7 +15,7 @@ class ResultsViewModel @Inject constructor(
         wizardCache.name,
         wizardCache.surname,
         wizardCache.birthdate?.let { dateFormat.format(it) } ?: "",
-        "${wizardCache.country}, ${wizardCache.city}, ${wizardCache.city}",
+        "${wizardCache.country}, ${wizardCache.city}, ${wizardCache.address}",
         wizardCache.interests
     ))
     val results: LiveData<Results> = _results
