@@ -11,8 +11,6 @@ class WizardCache @Inject constructor() {
     lateinit var surname:String
     lateinit var date:LocalDate
     lateinit var interests: List<String>
-    lateinit var country:String
-    lateinit var city:String
     lateinit var address:String
 
     fun saveNameData(name: String, surname:String, date: LocalDate) {
@@ -25,9 +23,7 @@ class WizardCache @Inject constructor() {
         this.interests = interests
     }
 
-    fun saveAddressData(country: String, city:String, address: String) {
-        this.country = country
-        this.city = city
+    fun saveAddressData(address: String) {
         this.address = address
     }
 }

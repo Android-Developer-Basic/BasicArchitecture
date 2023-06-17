@@ -7,10 +7,17 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/addressName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Адрес"
         android:textSize="25sp"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/full_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Введите адрес"/>
 
     <EditText
         android:id="@+id/country"

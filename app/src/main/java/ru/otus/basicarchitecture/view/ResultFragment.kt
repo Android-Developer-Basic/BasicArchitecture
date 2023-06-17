@@ -43,8 +43,7 @@ class ResultFragment : Fragment() {
         }
 
         binding.interests.text = wizardCache.interests.toString()
-        binding.address.text = "${wizardCache.country}, ${wizardCache.city}, ${wizardCache.address}";
+        binding.address.text = wizardCache.address
     }
-
 
 }
