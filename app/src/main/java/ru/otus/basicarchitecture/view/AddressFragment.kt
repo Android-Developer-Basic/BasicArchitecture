@@ -17,7 +17,6 @@ import ru.otus.basicarchitecture.viewmodel.AddressViewModel
 import java.util.stream.Collectors
 
 class AddressFragment : Fragment() {
-
     companion object {
         fun newInstance() = AddressFragment()
     }
@@ -68,5 +67,10 @@ class AddressFragment : Fragment() {
                 ?.addToBackStack(null)
                 ?.commit()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.cancel()
     }
 }

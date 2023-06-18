@@ -19,24 +19,6 @@
         android:layout_height="wrap_content"
         android:hint="Введите адрес"/>
 
-    <EditText
-        android:id="@+id/country"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Страна" />
-
-    <EditText
-        android:id="@+id/city"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Город" />
-
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Адрес" />
-
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
