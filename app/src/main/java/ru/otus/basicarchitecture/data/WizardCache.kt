@@ -1,10 +1,10 @@
 package ru.otus.basicarchitecture.data
 
-import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import java.util.Date
 import javax.inject.Inject
 
-@ActivityScoped
+@ActivityRetainedScoped
 class WizardCache @Inject constructor() {
     var name: String = ""
     var surname: String = ""

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.otus.basicarchitecture.data.WizardCache
 import ru.otus.basicarchitecture.data.Address
@@ -20,8 +21,11 @@ class AddressFormViewModel(
     private val _addresses = MutableLiveData<List<Address>>(listOf())
     val addresses: LiveData<List<Address>> = _addresses
 
+    private var searchJob: Job? = null
+
     fun search(query: String) {
-        viewModelScope.launch {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
             try {
                 val response = addressService.getAddressSuggestions(AddressQuery(query))
                 response.body()?.also {
