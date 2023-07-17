@@ -32,19 +32,19 @@ class UserInputFragmentAddress : Fragment(R.layout.fragment_user_input2) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.countryEditText.addTextChangedListener { text ->
-            viewModel.country.value = text.toString()
+            viewModel.viewState.value = viewModel.viewState.value!!.copy(country = text.toString())
         }
         binding.cityEditText.addTextChangedListener { text ->
-            viewModel.city.value = text.toString()
+            viewModel.viewState.value = viewModel.viewState.value!!.copy(city = text.toString())
         }
         binding.addressEditText.addTextChangedListener { text ->
-            viewModel.address.value = text.toString()
+            viewModel.viewState.value = viewModel.viewState.value!!.copy(address = text.toString())
         }
 
         binding.nextButton2.setOnClickListener {
             viewModel.validateAndSaveAddress()
-            val result = viewModel._state.value
-            var outText = "";
+            val result = viewModel.validateState.value
+            var outText = ""
             when (result) {
                 is ValidateState.BedFiled -> {}
                 is ValidateState.LoseFiled -> outText = "Пустое поле " + result.filed
@@ -54,7 +54,8 @@ class UserInputFragmentAddress : Fragment(R.layout.fragment_user_input2) {
                 }
                 null ->  outText = "Ошибка"
             }
-            Toast.makeText(context, outText, Toast.LENGTH_SHORT).show()
+            if (outText.isNotEmpty())
+                Toast.makeText(context, outText, Toast.LENGTH_SHORT).show()
         }
     }
 

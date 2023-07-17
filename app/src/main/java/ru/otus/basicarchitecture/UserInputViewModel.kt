@@ -12,48 +12,38 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserInputViewModel @Inject constructor(
-    private val wizardCache: WizardCache
+    val wizardCache: WizardCache
 ) : ViewModel() {
-    val _state = MutableLiveData<ValidateState>()
-    val firstName = MutableLiveData<String>()
-    val lastName = MutableLiveData<String>()
-    val dateOfBirth = MutableLiveData<String>()
-    val country = MutableLiveData<String>()
-    val city = MutableLiveData<String>()
-    val address = MutableLiveData<String>()
-    val selectedTags = mutableListOf<String>()
+    val validateState = MutableLiveData<ValidateState>()
+    val viewState: MutableLiveData<ViewState> = MutableLiveData(ViewState())
 
     fun validateAndSaveFirst() {
-        _state.value = isValidFirst(dateOfBirth.value?:"",
-            listOf(listOf(firstName.value?:"", "Имя"), listOf(lastName.value?:"", "Фамилия"))
+        validateState.value = isValidFirst(viewState.value!!.dateOfBirth,
+            listOf(listOf(viewState.value!!.firstName, "Имя"), listOf(viewState.value!!.lastName, "Фамилия"))
         )
     }
 
-    fun getWizardCache(): WizardCache {
-        return wizardCache
-    }
-
     fun validateAndSaveAddress() {
+        val stats = viewState.value!!
         val checkFiles = isValidFields(
             listOf(
-                listOf(country.value?:"", "Строна"),
-                listOf(city.value?:"", "Город"),
-                listOf(address.value?:"", "Адрес")
+                listOf(stats.country, "Строна"),
+                listOf(stats.city, "Город"),
+                listOf(stats.address, "Адрес")
             ))
 
-        _state.value = if (checkFiles.isNotEmpty())
+        validateState.value = if (checkFiles.isNotEmpty())
             ValidateState.LoseFiled(checkFiles)
         else {
-            wizardCache.country = country.value
-            wizardCache.city = city.value
-            wizardCache.address = address.value
+            wizardCache.country = stats.country
+            wizardCache.city = stats.city
+            wizardCache.address = stats.address
             ValidateState.Ok
         }
-
     }
 
-
     private fun isValidFirst(dateOfBirth: String, fields: List<List<String>>): ValidateState {
+        val stats = viewState.value!!
         val checkFiles = isValidFields(fields)
         if (checkFiles.isNotEmpty())
             return ValidateState.LoseFiled(checkFiles)
@@ -81,8 +71,8 @@ class UserInputViewModel @Inject constructor(
             cal.time = date
             cal.add(Calendar.YEAR, 18)
             return if (cal.time.before(Date())){
-                wizardCache.firstName = firstName.value
-                wizardCache.lastName = lastName.value
+                wizardCache.firstName = stats.firstName
+                wizardCache.lastName = stats.lastName
                 wizardCache.dateOfBirth = date
                 ValidateState.Ok
                 }
@@ -94,8 +84,6 @@ class UserInputViewModel @Inject constructor(
         }
 
         return ValidateState.BedFiled("Дата рождения")
-
-
     }
 
     private fun isValidFields(fields: List<List<String>>): String {
@@ -107,6 +95,6 @@ class UserInputViewModel @Inject constructor(
     }
 
     fun saveTags() {
-        wizardCache.selectedTags = selectedTags
+        wizardCache.selectedTags = viewState.value!!.selectedTags
     }
 }

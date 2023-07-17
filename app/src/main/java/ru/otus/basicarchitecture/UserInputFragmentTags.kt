@@ -44,9 +44,13 @@ class UserInputFragmentTags : Fragment(R.layout.fragment_user_input3) {
                 setOnClickListener {
                     it.isSelected = !it.isSelected
                     if (it.isSelected) {
-                        viewModel.selectedTags.add(tag)
+                        val selectedTags = viewModel.viewState.value!!.selectedTags
+                        selectedTags.add(tag)
+                        viewModel.viewState.value = viewModel.viewState.value!!.copy(selectedTags = selectedTags)
                     } else {
-                        viewModel.selectedTags.remove(tag)
+                        val selectedTags = viewModel.viewState.value!!.selectedTags
+                        selectedTags.remove(tag)
+                        viewModel.viewState.value = viewModel.viewState.value!!.copy(selectedTags = selectedTags)
                     }
                 }
             }

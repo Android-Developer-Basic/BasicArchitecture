@@ -46,21 +46,22 @@ class UserInputFragment : Fragment(R.layout.fragment_user_input) {
             }
 
             override fun afterTextChanged(s: Editable) {
-                viewModel.dateOfBirth.value = binding.dateOfBirthEditText.text.toString()
+                viewModel.viewState.value = viewModel.viewState.value!!.copy(dateOfBirth = binding.dateOfBirthEditText.text.toString())
             }
         })
 
         binding.firstNameEditText.addTextChangedListener { text ->
-            viewModel.firstName.value = text.toString()
+            viewModel.viewState.value = viewModel.viewState.value!!.copy(firstName = text.toString())
         }
         binding.lastNameEditText.addTextChangedListener { text ->
-            viewModel.lastName.value = text.toString()
+            viewModel.viewState.value = viewModel.viewState.value!!.copy(lastName = text.toString())
         }
+
 
         binding.nextButton.setOnClickListener {
             viewModel.validateAndSaveFirst()
-            val result = viewModel._state.value
-            var outText = "";
+            val result = viewModel.validateState.value
+            var outText = ""
             when (result) {
                     is ValidateState.BedFiled -> outText = "Некорректное поле " + result.filed
                     is ValidateState.LoseFiled -> outText = "Пустое поле " + result.filed
@@ -73,7 +74,8 @@ class UserInputFragment : Fragment(R.layout.fragment_user_input) {
                     }
                     null ->  outText = "Ошибка"
                 }
-            Toast.makeText(context, outText, Toast.LENGTH_SHORT).show()
+            if (outText.isNotEmpty())
+                Toast.makeText(context, outText, Toast.LENGTH_SHORT).show()
             }
 
 

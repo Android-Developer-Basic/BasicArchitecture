@@ -32,22 +32,21 @@ class UserInputFragmentLast : Fragment(R.layout.fragment_user_input4) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val wizardCache = viewModel.getWizardCache()
 
-        binding.firstNameTextView.text = wizardCache.firstName
-        binding.lastNameTextView.text = wizardCache.lastName
+        binding.firstNameTextView.text = viewModel.wizardCache.firstName
+        binding.lastNameTextView.text = viewModel.wizardCache.lastName
         val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-        binding.dateOfBirthTextView.text = wizardCache.dateOfBirth?.let { format.format(it) }
+        binding.dateOfBirthTextView.text = viewModel.wizardCache.dateOfBirth?.let { format.format(it) }
         val addressString = getString(
             R.string.address_format,
-            wizardCache.country,
-            wizardCache.city,
-            wizardCache.address
+            viewModel.wizardCache.country,
+            viewModel.wizardCache.city,
+            viewModel.wizardCache.address
         )
         binding.addressTextView.text = addressString
 
         val flexboxLayout = binding.tagContainer
-        val tags = wizardCache.selectedTags
+        val tags = viewModel.wizardCache.selectedTags
         tags.forEach { tag ->
             val textView = TextView(context).apply {
                 text = tag
@@ -58,9 +57,13 @@ class UserInputFragmentLast : Fragment(R.layout.fragment_user_input4) {
                 setOnClickListener {
                     it.isSelected = !it.isSelected
                     if (it.isSelected) {
-                        viewModel.selectedTags.add(tag)
+                        val selectedTags = viewModel.viewState.value!!.selectedTags
+                        selectedTags.add(tag)
+                        viewModel.viewState.value = viewModel.viewState.value!!.copy(selectedTags = selectedTags)
                     } else {
-                        viewModel.selectedTags.remove(tag)
+                        val selectedTags = viewModel.viewState.value!!.selectedTags
+                        selectedTags.remove(tag)
+                        viewModel.viewState.value = viewModel.viewState.value!!.copy(selectedTags = selectedTags)
                     }
                 }
             }
