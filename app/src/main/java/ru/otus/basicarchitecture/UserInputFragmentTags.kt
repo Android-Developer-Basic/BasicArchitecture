@@ -15,7 +15,7 @@ import ru.otus.basicarchitecture.databinding.FragmentUserInput3Binding
 
 @AndroidEntryPoint
 class UserInputFragmentTags : Fragment(R.layout.fragment_user_input3) {
-    private val viewModel: UserInputViewModel by viewModels()
+    private val viewModel: UserInputTagsViewModel by viewModels()
     private var _binding: FragmentUserInput3Binding? = null
 
 
@@ -41,6 +41,7 @@ class UserInputFragmentTags : Fragment(R.layout.fragment_user_input3) {
                 setTextColor(Color.WHITE)
                 setPadding(30, 18, 30, 18)
                 setBackgroundResource(R.drawable.tag_background)
+                isSelected = tag in viewModel.wizardCache.selectedTags
                 setOnClickListener {
                     it.isSelected = !it.isSelected
                     if (it.isSelected) {

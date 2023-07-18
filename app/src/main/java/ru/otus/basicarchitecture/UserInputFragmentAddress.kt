@@ -14,7 +14,7 @@ import ru.otus.basicarchitecture.databinding.FragmentUserInput2Binding
 
 @AndroidEntryPoint
 class UserInputFragmentAddress : Fragment(R.layout.fragment_user_input2) {
-    private val viewModel: UserInputViewModel by viewModels()
+    private val viewModel: UserInputAddressViewModel by viewModels()
     private var _binding: FragmentUserInput2Binding? = null
 
 
@@ -46,13 +46,11 @@ class UserInputFragmentAddress : Fragment(R.layout.fragment_user_input2) {
             val result = viewModel.validateState.value
             var outText = ""
             when (result) {
-                is ValidateState.BedFiled -> {}
                 is ValidateState.LoseFiled -> outText = "Пустое поле " + result.filed
-                ValidateState.Not18 -> {}
                 ValidateState.Ok -> {
                     findNavController().navigate(R.id.action_userInputFragment2_to_userInputFragment3)
                 }
-                null ->  outText = "Ошибка"
+                else -> outText = "Ошибка"
             }
             if (outText.isNotEmpty())
                 Toast.makeText(context, outText, Toast.LENGTH_SHORT).show()

@@ -77,8 +77,6 @@ class UserInputFragment : Fragment(R.layout.fragment_user_input) {
             if (outText.isNotEmpty())
                 Toast.makeText(context, outText, Toast.LENGTH_SHORT).show()
             }
-
-
     }
 
     override fun onDestroyView() {

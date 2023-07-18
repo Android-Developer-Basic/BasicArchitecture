@@ -16,7 +16,7 @@ import java.util.Locale
 
 @AndroidEntryPoint
 class UserInputFragmentLast : Fragment(R.layout.fragment_user_input4) {
-    private val viewModel: UserInputViewModel by viewModels()
+    private val viewModel: UserInputLastViewModel by viewModels()
     private var _binding: FragmentUserInput4Binding? = null
 
 
@@ -54,18 +54,6 @@ class UserInputFragmentLast : Fragment(R.layout.fragment_user_input4) {
                 setTextColor(Color.WHITE)
                 setPadding(30, 18, 30, 18)
                 setBackgroundResource(R.drawable.tag_background2)
-                setOnClickListener {
-                    it.isSelected = !it.isSelected
-                    if (it.isSelected) {
-                        val selectedTags = viewModel.viewState.value!!.selectedTags
-                        selectedTags.add(tag)
-                        viewModel.viewState.value = viewModel.viewState.value!!.copy(selectedTags = selectedTags)
-                    } else {
-                        val selectedTags = viewModel.viewState.value!!.selectedTags
-                        selectedTags.remove(tag)
-                        viewModel.viewState.value = viewModel.viewState.value!!.copy(selectedTags = selectedTags)
-                    }
-                }
             }
             val lp = FlexboxLayout.LayoutParams(
                 FlexboxLayout.LayoutParams.WRAP_CONTENT,

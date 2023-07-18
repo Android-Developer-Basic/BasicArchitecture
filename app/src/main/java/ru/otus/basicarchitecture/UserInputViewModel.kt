@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserInputViewModel @Inject constructor(
-    val wizardCache: WizardCache
+    private val wizardCache: WizardCache
 ) : ViewModel() {
     val validateState = MutableLiveData<ValidateState>()
     val viewState: MutableLiveData<ViewState> = MutableLiveData(ViewState())
@@ -21,25 +21,6 @@ class UserInputViewModel @Inject constructor(
         validateState.value = isValidFirst(viewState.value!!.dateOfBirth,
             listOf(listOf(viewState.value!!.firstName, "Имя"), listOf(viewState.value!!.lastName, "Фамилия"))
         )
-    }
-
-    fun validateAndSaveAddress() {
-        val stats = viewState.value!!
-        val checkFiles = isValidFields(
-            listOf(
-                listOf(stats.country, "Строна"),
-                listOf(stats.city, "Город"),
-                listOf(stats.address, "Адрес")
-            ))
-
-        validateState.value = if (checkFiles.isNotEmpty())
-            ValidateState.LoseFiled(checkFiles)
-        else {
-            wizardCache.country = stats.country
-            wizardCache.city = stats.city
-            wizardCache.address = stats.address
-            ValidateState.Ok
-        }
     }
 
     private fun isValidFirst(dateOfBirth: String, fields: List<List<String>>): ValidateState {
@@ -94,7 +75,4 @@ class UserInputViewModel @Inject constructor(
         return ""
     }
 
-    fun saveTags() {
-        wizardCache.selectedTags = viewState.value!!.selectedTags
-    }
 }
