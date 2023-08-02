@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Primary" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+    
+    <style name="Primary.Fr1">
+        <item name="android:background">@color/white</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="Primary.Fr2">
+        <item name="android:background">@color/white</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="Primary.FR_view">
+        <item name= "android:textSize">20sp</item>
+        <item name="android:color">@color/black</item>
+        
+    </style>
+    
+    
+    
+</resources>
