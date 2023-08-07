@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">BasicArchitecture</string>
+    <string name="nameFragment">Enter Your personal-date</string>
+    <string name="addressFragment">Enter Your Address</string>
+    <string name="interestsFragment">Pickup Your interests</string>
+    <string name="questionnaireFragment">This is Your basic questionnaire</string>
+    <string name="nameHint">Name</string>
+    <string name="surnameHint">Surname</string>
+    <string name="birthdayHint">Birthday</string>
+    <string name="buttonNextText">Next</string>
+    <string name="countryHint">Country</string>
+    <string name="cityHint">City</string>
+    <string name="addressHint">Address</string>
+    <string name="interest">Music</string>
+    <string name="interestsLabel">Interests</string>
+    <string name="birthdayLabel">Date of Birth</string>
 </resources>
