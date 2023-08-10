@@ -57,7 +57,7 @@
                 android:inputType="date"
                 android:clickable="false"
                 android:cursorVisible="false"
-                android:focusable="false"
+                android:focusable="true"
                 android:focusableInTouchMode="false"/>
 
         </com.google.android.material.textfield.TextInputLayout>

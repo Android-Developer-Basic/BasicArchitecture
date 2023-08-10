@@ -1,17 +1,15 @@
 package ru.otus.basicarchitecture.interests
 
 import androidx.lifecycle.ViewModel
-import ru.otus.basicarchitecture.DataCache
+import dagger.hilt.android.lifecycle.HiltViewModel
+import ru.otus.basicarchitecture.DataCacheStorage
+import javax.inject.Inject
 
-private const val MIN_INTERESTS_COUNT = 1
-
-class InterestsFragmentModel : ViewModel() {
+private const val MIN_INTERESTS_COUNT = 5
+@HiltViewModel
+class InterestsFragmentModel @Inject constructor(private val dataCacheStorage: DataCacheStorage): ViewModel() {
     val listOfInterests  by lazy{
-        DataCache.listOfInterests
-    }
-
-    fun interestsChange(checkedChipIds: List<Int>) {
-        TODO("Not yet implemented")
+        dataCacheStorage.cache.value?.listOfInterests ?: emptyList()
     }
 
     fun checkInterest(count: Int): Boolean {
@@ -19,8 +17,9 @@ class InterestsFragmentModel : ViewModel() {
     }
 
     fun onNextButtonClicked(checkedChipIds: MutableList<Int>) {
-        DataCache.selectedInterests =
-            listOfInterests.filterIndexed { index, _ ->  checkedChipIds.contains(index) }
+        dataCacheStorage.cache.value = dataCacheStorage.cache.value?.copy(
+            selectedInterests = listOfInterests.filterIndexed { index, _ ->  checkedChipIds.contains(index) }
+        )
     }
 
 }

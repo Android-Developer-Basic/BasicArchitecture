@@ -1,54 +1,80 @@
 package ru.otus.basicarchitecture.name
 
-import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.text.Editable
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.otus.basicarchitecture.DataCache
+import dagger.hilt.android.lifecycle.HiltViewModel
+import ru.otus.basicarchitecture.DataCacheStorage
 import java.time.LocalDate
 import java.time.Period
 import java.time.ZoneId
 import java.util.Date
-import java.util.Locale
+import javax.inject.Inject
 
-class NameFragmentModel : ViewModel() {
 
-    private val _name = MutableLiveData("")
-    val name: LiveData<String> = _name
+@RequiresApi(Build.VERSION_CODES.O)
+@HiltViewModel
+class NameFragmentModel @Inject constructor(private val dataCacheStorage: DataCacheStorage) : ViewModel() {
 
-    private val _surname = MutableLiveData("")
-    val surname: LiveData<String> = _surname
+    private val _state = MutableLiveData<NameFragmentState>()
+    val nameFragmentState: LiveData<NameFragmentState> = _state
 
-    private val _date = MutableLiveData("")
-    val date: LiveData<String> = _date
+    init {
+        _state.postValue(
+            NameFragmentState(
+                dataCacheStorage.cache.value?.name ?: "",
+                dataCacheStorage.cache.value?.surname ?: "",
+                dataCacheStorage.cache.value?.birthday ?: Date(),
+                isAdult = checkIsAdult(dataCacheStorage.cache.value?.birthday ?: Date()),
+                accessNextButton = checkedAssessButton(),
+            )
+        )
+    }
 
-    private val _isAdult = MutableLiveData(false)
-    val accessNextButton: LiveData<Boolean> = _isAdult
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun checkIsAdult(birthday: Date): Boolean {
+        val birthdayDate = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        val todayDate = LocalDate.now()
+        return Period.between(birthdayDate,todayDate).years >= 18
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun onSetAge(birthday: Date) {
-        val birthdayDate = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-        val todayDate = LocalDate.now()
-        val yearDiff = Period.between(birthdayDate,todayDate).years
-        _date.value = SimpleDateFormat("dd.MM.yyyy", Locale.UK).format(birthday.time)
-        _isAdult.value = yearDiff >= 18
+        val currentState = _state.value ?: NameFragmentState()
+        _state.postValue(
+            currentState.copy(
+                date = birthday,
+                isAdult = checkIsAdult(birthday),
+                accessNextButton = checkedAssessButton(),
+            )
+        )
     }
 
     fun onNextButtonClicked() {
-        DataCache.name = _name.value.toString()
-        DataCache.surname = _surname.value.toString()
-        DataCache.birthday = _date.value.toString()
+        dataCacheStorage.cache.value = dataCacheStorage.cache.value?.copy(
+            name = _state.value?.name.toString(),
+            surname = _state.value?.surname.toString(),
+            birthday = _state.value?.date ?: Date()
+        )
     }
 
     fun checkTextFields(nameText: Editable?, surnameText: Editable?) {
-        _name.value = nameText.toString()
-        _surname.value = surnameText.toString()
+        val currentState = _state.value ?: NameFragmentState()
+        _state.postValue(
+            currentState.copy(
+                name = nameText.toString(),
+                surname = surnameText.toString(),
+                accessNextButton = checkedAssessButton(),
+            )
+        )
     }
-
+    private fun checkedAssessButton(): Boolean {
+        return /*_state.value?.name?.isNotEmpty() == true && _state.value?.surname?.isNotEmpty() == true &&*/ _state.value?.isAdult == true
+    }
     fun isButtonEnabled(): Boolean {
-        return _name.value!!.isNotEmpty() && _surname.value!!.isNotEmpty() && _isAdult.value == true
+        return _state.value?.accessNextButton ?: false
     }
 }

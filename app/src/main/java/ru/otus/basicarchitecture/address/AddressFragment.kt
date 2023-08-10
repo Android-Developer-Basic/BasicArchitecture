@@ -7,8 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
+import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.R
-
+@AndroidEntryPoint
 class AddressFragment : Fragment(R.layout.fragment_adress), View.OnFocusChangeListener {
     private val addressViewModelInstance : AddressFragmentModel by viewModels()
     private lateinit var nextButton: Button
@@ -23,6 +24,12 @@ class AddressFragment : Fragment(R.layout.fragment_adress), View.OnFocusChangeLi
         cityField = view.findViewById(R.id.cityTextEdit)
         addressField  = view.findViewById(R.id.addressTextEdit)
         nextButton = view.findViewById(R.id.addressNextButton)
+
+        addressViewModelInstance.addressFragmentState.observe(viewLifecycleOwner) {state ->
+            countryField.setTextKeepState(state.country)
+            cityField.setTextKeepState(state.city)
+            addressField.setTextKeepState(state.address)
+        }
 
         countryField.onFocusChangeListener = this
         cityField.onFocusChangeListener = this

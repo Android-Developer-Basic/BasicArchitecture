@@ -4,14 +4,14 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.R
-
+@AndroidEntryPoint
 class InterestsFragment : Fragment(R.layout.fragment_interests) {
     private val interestsViewModelInstance : InterestsFragmentModel by viewModels()
     private lateinit var nextButton: Button

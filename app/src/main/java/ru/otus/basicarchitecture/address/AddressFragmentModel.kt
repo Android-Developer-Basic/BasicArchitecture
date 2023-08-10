@@ -4,31 +4,50 @@ import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.otus.basicarchitecture.DataCache
+import dagger.hilt.android.lifecycle.HiltViewModel
+import ru.otus.basicarchitecture.DataCacheStorage
+import javax.inject.Inject
 
-class AddressFragmentModel : ViewModel(){
-    private val _country = MutableLiveData("")
-    val name: LiveData<String> = _country
+@HiltViewModel
+class AddressFragmentModel @Inject constructor(private val dataCacheStorage: DataCacheStorage): ViewModel(){
+    private val _state = MutableLiveData<AddressFragmentState>()
+    val addressFragmentState: LiveData<AddressFragmentState> = _state
 
-    private val _city = MutableLiveData("")
-    val city: LiveData<String> = _city
+    init {
+        _state.postValue(
+            AddressFragmentState(
+                dataCacheStorage.cache.value?.country ?: "",
+                dataCacheStorage.cache.value?.city ?: "",
+                dataCacheStorage.cache.value?.address ?: "",
+                checkedAssessButton(),
+            )
+        )
+    }
 
-    private val _address = MutableLiveData("")
-    val address: LiveData<String> = _address
-
+    private fun checkedAssessButton(): Boolean {
+        return /*_state.value?.country?.isNotEmpty() == true && _state.value?.city?.isNotEmpty() == true && _state.value?.address?.isNotEmpty() ==*/ true
+    }
     fun isButtonEnabled(): Boolean {
-        return _country.value!!.isNotEmpty() && _city.value!!.isNotEmpty() && _address.value!!.isNotEmpty()
+        return _state.value?.accessNextButton ?: false
     }
 
     fun onNextButtonClicked() {
-        DataCache.country = _country.value.toString()
-        DataCache.city = _city.value.toString()
-        DataCache.address = _address.value.toString()
+        dataCacheStorage.cache.value = dataCacheStorage.cache.value?.copy(
+            country = _state.value?.country.toString(),
+            city = _state.value?.city.toString(),
+            address = _state.value?.address.toString()
+        )
     }
 
     fun checkTextFields(countryText: Editable?, cityText: Editable?, addressText: Editable?) {
-        _country.value = countryText.toString()
-        _city.value = cityText.toString()
-        _address.value = addressText.toString()
+        val currentState = _state.value ?: AddressFragmentState()
+        _state.postValue(
+            currentState.copy(
+                country = countryText.toString(),
+                city = cityText.toString(),
+                address = addressText.toString(),
+                accessNextButton = checkedAssessButton(),
+            )
+        )
     }
 }

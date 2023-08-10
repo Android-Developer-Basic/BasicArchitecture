@@ -3,14 +3,14 @@ package ru.otus.basicarchitecture.questionnaire
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textview.MaterialTextView
+import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.R
-
+@AndroidEntryPoint
 class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
     private val questionnaireViewModelInstance : QuestionnaireFragmentModel by viewModels()
     private lateinit var nameField: MaterialTextView
@@ -18,7 +18,7 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
     private lateinit var birthdayField: MaterialTextView
     private lateinit var addressField: MaterialTextView
     private lateinit var chipGroup: ChipGroup
-    private lateinit var listOfInterests : List<String?>
+    private lateinit var listOfInterests : List<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,14 +28,15 @@ class QuestionnaireFragment : Fragment(R.layout.fragment_questionnaire) {
         birthdayField = view.findViewById(R.id.birthdayTextView)
         addressField = view.findViewById(R.id.addressTextView)
 
-        nameField.text = questionnaireViewModelInstance.getName()
-        surnameField.text = questionnaireViewModelInstance.getSurname()
-        birthdayField.text = questionnaireViewModelInstance.getBirthday()
-        addressField.text = questionnaireViewModelInstance.getAddress()
-
-        listOfInterests = questionnaireViewModelInstance.listOfInterests
-        listOfInterests.forEachIndexed { index, tagName ->
-            chipGroup.addView(context?.let { createTagChip(it, tagName?:"", index) })
+        questionnaireViewModelInstance.questionnaireState.observe(viewLifecycleOwner) {state ->
+            nameField.setTextKeepState(state.name)
+            surnameField.setTextKeepState(state.surname)
+            birthdayField.setTextKeepState(state.birthday)
+            addressField.setTextKeepState(state.address)
+            listOfInterests = state.selectedInterests
+            listOfInterests.forEachIndexed { index, tagName ->
+                chipGroup.addView(context?.let { createTagChip(it, tagName, index) })
+            }
         }
     }
 

@@ -11,11 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
+import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.R
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
-
+@AndroidEntryPoint
 class NameFragment : Fragment(R.layout.fragment_name), View.OnFocusChangeListener {
     private val nameViewModelInstance : NameFragmentModel by viewModels()
     private lateinit var nextButton: Button
@@ -33,8 +35,16 @@ class NameFragment : Fragment(R.layout.fragment_name), View.OnFocusChangeListene
         birthdayField  = view.findViewById(R.id.birthdayTextEdit)
         nextButton = view.findViewById(R.id.nameNextButton)
 
+        nameViewModelInstance.nameFragmentState.observe(viewLifecycleOwner) {state ->
+            nameField.setTextKeepState(state.name)
+            surnameField.setTextKeepState(state.surname)
+            val sdf =  SimpleDateFormat("dd.MM.yyyy", Locale.US)
+            birthdayField.setTextKeepState(sdf.format(state.date))
+        }
+
         nameField.onFocusChangeListener = this
         surnameField.onFocusChangeListener = this
+        nameField.onCheckIsTextEditor()
 
         datePicker =MaterialDatePicker.Builder.datePicker()
             .setTitleText("Select your birthday")
@@ -45,22 +55,22 @@ class NameFragment : Fragment(R.layout.fragment_name), View.OnFocusChangeListene
 
         birthdayField.setOnClickListener { onCalendarOpen() }
         nextButton.setOnClickListener { goToNextScreen() }
-        nextButton.isEnabled = nameViewModelInstance.isButtonEnabled()
-
+        nextButton.isEnabled = false
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onCalendarOpen(){
         datePicker.show(this.parentFragmentManager, "Calendar")
         datePicker.addOnPositiveButtonClickListener {
-            calendar.timeInMillis = it
             val sdf =  SimpleDateFormat("dd.MM.yyyy", Locale.US)
-            birthdayField.setText(sdf.format(calendar.time))
-            nameViewModelInstance.onSetAge(calendar.time)
+            val date = Date(it)
+            birthdayField.setText(sdf.format(date))
+            nameViewModelInstance.onSetAge(date)
             nextButton.isEnabled = nameViewModelInstance.isButtonEnabled()
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onFocusChange(v: View?, hasFocus: Boolean) {
         if (!hasFocus) {
             nameViewModelInstance.checkTextFields(
@@ -71,6 +81,8 @@ class NameFragment : Fragment(R.layout.fragment_name), View.OnFocusChangeListene
         }
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun goToNextScreen() {
         nameViewModelInstance.onNextButtonClicked()
         findNavController().navigate(R.id.action_nameFragment_to_addressFragment)

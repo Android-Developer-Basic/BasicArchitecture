@@ -1,24 +1,38 @@
 package ru.otus.basicarchitecture.questionnaire
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.otus.basicarchitecture.DataCache
+import dagger.hilt.android.lifecycle.HiltViewModel
+import ru.otus.basicarchitecture.DataCacheStorage
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import javax.inject.Inject
 
-class QuestionnaireFragmentModel : ViewModel() {
-    val listOfInterests: List<String?> by lazy { DataCache.selectedInterests }
+@HiltViewModel
+class QuestionnaireFragmentModel @Inject constructor(dataCacheStorage: DataCacheStorage): ViewModel() {
+    private val _state = MutableLiveData<QuestionnaireModelState>()
+    val questionnaireState: LiveData<QuestionnaireModelState> = _state
 
-    fun getName(): String {
-        return DataCache.name
+    private fun dateConverter(date : Date?): String {
+        return if (date != null) {
+            SimpleDateFormat("dd.MM.yyyy", Locale.UK).format(date.time)
+        } else ""
     }
 
-    fun getSurname(): String {
-        return DataCache.surname
+    init {
+        _state.postValue(
+            QuestionnaireModelState(
+                dataCacheStorage.cache.value?.name ?: "",
+                dataCacheStorage.cache.value?.surname ?: "",
+                dateConverter(dataCacheStorage.cache.value?.birthday),
+                "${dataCacheStorage.cache.value?.country} ${dataCacheStorage.cache.value?.city} ${dataCacheStorage.cache.value?.address}",
+                dataCacheStorage.cache.value?.selectedInterests ?: emptyList()
+            )
+        )
     }
 
-    fun getBirthday(): String {
-        return DataCache.birthday
-    }
 
-    fun getAddress(): String {
-        return "${DataCache.country} ${DataCache.city} ${DataCache.address}"
-    }
 }
+
