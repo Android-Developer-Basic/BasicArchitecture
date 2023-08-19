@@ -5,25 +5,12 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/countryEditText"
+    <AutoCompleteTextView
+        android:id="@+id/my_auto_complete_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/country"/>
-
-    <EditText
-        android:id="@+id/cityEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/city"
-        android:layout_marginTop="16dp" />
-
-    <EditText
-        android:id="@+id/addressEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/address"
-        android:layout_marginTop="16dp" />
+        android:inputType="text"
+        android:completionThreshold="3"/>
 
     <Button
         android:id="@+id/nextButton2"

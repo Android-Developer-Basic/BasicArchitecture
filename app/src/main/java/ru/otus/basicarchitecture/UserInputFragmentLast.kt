@@ -37,13 +37,7 @@ class UserInputFragmentLast : Fragment(R.layout.fragment_user_input4) {
         binding.lastNameTextView.text = viewModel.wizardCache.lastName
         val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         binding.dateOfBirthTextView.text = viewModel.wizardCache.dateOfBirth?.let { format.format(it) }
-        val addressString = getString(
-            R.string.address_format,
-            viewModel.wizardCache.country,
-            viewModel.wizardCache.city,
-            viewModel.wizardCache.address
-        )
-        binding.addressTextView.text = addressString
+        binding.addressTextView.text = viewModel.wizardCache.address
 
         val flexboxLayout = binding.tagContainer
         val tags = viewModel.wizardCache.selectedTags
