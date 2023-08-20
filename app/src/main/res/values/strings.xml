@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">BasicArchitecture</string>
+    <string name="first_name">Введите имя</string>
+    <string name="last_name">Введите фамилию</string>
+    <string name="date_of_birth">Укажите дату рождения</string>
+    <string name="next">Далее</string>
+    <string name="country">Укажите страну</string>
+    <string name="city">Укажите город</string>
+    <string name="address">Укажите адрес</string>
+    <string name="selectedtags">Выберите интересы</string>
+    <string name="firstname">Имя</string>
+    <string name="lastname">Фамилия</string>
+    <string name="dateofbirth">Дата рождения</string>
+    <string name="address_textView">Адрес проживания</string>
+    <string name="selectedtags_out">Интересы</string>
+    <string name="address_format">%1$s, %2$s, %3$s</string>
+    <string name="fragment1">Личные данные</string>
+    <string name="fragment2">Адрес прожтвания</string>
+    <string name="fragment3">Интересы</string>
+    <string name="fragment4">Личная карточка</string>
 </resources>
