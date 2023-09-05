@@ -1,3 +1,20 @@
 <resources>
+
     <string name="app_name">BasicArchitecture</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="birthdate">Birthdate</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="address">Street, Building</string>
+    <string name="next">Далее</string>
+    <string name="exit">Выход</string>
+    <string name="full_address">Address</string>
+    <string name="interests">Interests</string>
+    <string name="nameFragment">Персональные данные</string>
+    <string name="addressFragment">Адрес</string>
+    <string name="interestsFragment">Интересы</string>
+    <string name="questionnaireFragment">Результат</string>
+    <string name="birthdayLabel">Date of Birth</string>
+
 </resources>
