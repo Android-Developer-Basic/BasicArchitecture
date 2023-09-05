@@ -10,14 +10,19 @@ import ru.otus.basicarchitecture.databinding.FragmentAddressBinding
 import androidx.navigation.fragment.findNavController
 import ru.otus.basicarchitecture.viewmodel.AddressViewModel
 import androidx.fragment.app.viewModels
-import java.time.format.DateTimeFormatter
-import javax.inject.Inject
+
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.ArrayAdapter
+import ru.otus.basicarchitecture.model.AddressService
+import ru.otus.basicarchitecture.model.AddressValue
+import java.util.stream.Collectors
 
 @AndroidEntryPoint
 class AddressFragment : Fragment(R.layout.fragment_address) {
     private lateinit var binding: FragmentAddressBinding
     private val viewModel : AddressViewModel by viewModels()
-
+    private val service = AddressService()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -33,14 +38,35 @@ class AddressFragment : Fragment(R.layout.fragment_address) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.fullAddress.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(editable: Editable?) {
+                viewModel.search(editable.toString())
+            }
+        })
+
+        viewModel.getResultAddressLive().observe(viewLifecycleOwner) {
+            if(it!=null) {
+                val list = it.stream().map(AddressValue::value).collect(Collectors.toList())
+                val adapter = ArrayAdapter<String>(
+                    requireContext(),
+                    android.R.layout.simple_list_item_1,
+                    list
+                )
+                binding.fullAddress.setAdapter(adapter)
+            }
+        }
+
         binding.next.setOnClickListener() {
-            viewModel.saveData(
-                binding.country.editText!!.text.toString(),
-                binding.city.editText!!.text.toString(),
-                binding.address.editText!!.text.toString()
-            )
+            viewModel.saveData(binding.fullAddress.text.toString())
             findNavController().navigate(R.id.action_addressFragment_to_interestsFragment)
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.cancel()
     }
 }

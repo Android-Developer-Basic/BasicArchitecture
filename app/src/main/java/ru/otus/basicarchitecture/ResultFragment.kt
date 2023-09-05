@@ -50,7 +50,7 @@ class ResultFragment : Fragment(R.layout.fragment_results) {
             binding.checkedChipGroup.addView(chip)
         }
 
-        binding.addressTextView.text = "${wizardCache.country}, ${wizardCache.city}, ${wizardCache.address}";
+        binding.addressTextView.text = wizardCache.address
     }
 }
 

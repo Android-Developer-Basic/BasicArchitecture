@@ -1,7 +1,6 @@
 package ru.otus.basicarchitecture
 
 import dagger.hilt.android.scopes.ActivityRetainedScoped
-//import java.util.Date
 import javax.inject.Inject
 import java.time.LocalDate
 
@@ -26,9 +25,7 @@ class WizardCache @Inject constructor() {
         this.interests = interests
     }
 
-    fun saveAddressData(country: String, city:String, address: String) {
-        this.country = country
-        this.city = city
+    fun saveAddressData(address: String) {
         this.address = address
     }
 
