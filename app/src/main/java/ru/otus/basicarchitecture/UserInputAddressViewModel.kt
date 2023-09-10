@@ -47,19 +47,25 @@ class UserInputAddressViewModel @Inject constructor(
 
 
 
-    fun validateAndSaveAddress() {
+    fun validateAndSaveAddress(): ValidateState {
         val stats = viewState.value!!
         val checkFiles = isValidFields(
             listOf(
                 listOf(stats.address, "Адрес")
             ))
 
-        validateState.value = if (checkFiles.isNotEmpty())
+        val res = if (checkFiles.isNotEmpty()) {
             ValidateState.LoseFiled(checkFiles)
+        }
         else {
             wizardCache.address = stats.address
             ValidateState.Ok
         }
+        validateState.value = res
+
+        return res
+
+
     }
 
 
