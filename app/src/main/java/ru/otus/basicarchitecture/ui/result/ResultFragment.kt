@@ -36,7 +36,7 @@ class ResultFragment : Fragment() {
             binding.nameTextView.text = cache.name
             binding.surnameTextView.text = cache.surname
             binding.textViewBurth.text = formatDate.format(cache.birth)
-            binding.addressTextView.text = "${cache.country}; ${cache.city}; ${cache.address}"
+            binding.addressTextView.text = cache.location
             cache.selectedInterests.forEachIndexed { index, tag ->
                 binding.chipGroup.addView(createTagChip(requireContext(), tag, index))
             }

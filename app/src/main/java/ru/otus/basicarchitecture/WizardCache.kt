@@ -10,9 +10,7 @@ data class WizardCache(
     val name: String = "",
     val surname: String = "",
     val birth: Date = Date(),
-    val country: String = "",
-    val city: String = "",
-    val address: String = "",
+    val location: String = "",
     val selectedInterests: List<String> = emptyList()
 ) {
     val listOfInterests: List<String> = listOf(
