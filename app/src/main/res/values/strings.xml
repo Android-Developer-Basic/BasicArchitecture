@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BasicArchitecture</string>
+    <string name="error_text_field">This field cannot be empty</string>
 </resources>
