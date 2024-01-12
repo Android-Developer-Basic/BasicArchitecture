@@ -1,7 +1,8 @@
-package ru.otus.basicarchitecture
+package ru.otus.basicarchitecture.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.otus.basicarchitecture.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
