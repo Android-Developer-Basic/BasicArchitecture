@@ -6,17 +6,17 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nameTextField"
+        android:id="@+id/firstTextField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/surnameTextField"
+        app:layout_constraintBottom_toTopOf="@id/secondTextField"
         android:layout_marginBottom="30dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:hint="@string/hintName">
+        android:layout_marginRight="10dp">
+    <!--    android:hint="@string/hintName">-->
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nameEditText"
+            android:id="@+id/firstEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:endIconMode="clear_text"/>
@@ -25,17 +25,17 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/surnameTextField"
+        android:id="@+id/secondTextField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:hint="@string/surnameHint">
+        android:layout_marginRight="10dp">
+    <!--    android:hint="@string/surnameHint">-->
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/surnameEditText"
+            android:id="@+id/secondEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:endIconMode="clear_text" />
@@ -43,20 +43,20 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ageTextField"
+        android:id="@+id/thirdInputText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/surnameTextField"
+        app:layout_constraintTop_toBottomOf="@id/secondTextField"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:hint="@string/DateOfBirthHint"
+        android:layout_marginRight="10dp">
+        <!--android:hint="@string/DateOfBirthHint"
         app:startIconDrawable="@drawable/calendar"
         app:startIconContentDescription="@string/DateOfBirthHint"
-        app:startIconScaleType = "centerInside">
+        app:startIconScaleType = "centerInside">-->
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ageEditText"
+            android:id="@+id/thirdEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:endIconMode="clear_text"
