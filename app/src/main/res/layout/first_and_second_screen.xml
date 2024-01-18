@@ -6,10 +6,10 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/firstTextField"
+        android:id="@+id/firstInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/secondTextField"
+        app:layout_constraintBottom_toTopOf="@id/secondInputLayout"
         android:layout_marginBottom="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
@@ -25,7 +25,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/secondTextField"
+        android:id="@+id/secondInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,14 +43,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/thirdInputText"
+        android:id="@+id/thirdInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/secondTextField"
+        app:layout_constraintTop_toBottomOf="@id/secondInputLayout"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
-        <!--android:hint="@string/DateOfBirthHint"
+<!--        android:hint="@string/DateOfBirthHint"
         app:startIconDrawable="@drawable/calendar"
         app:startIconContentDescription="@string/DateOfBirthHint"
         app:startIconScaleType = "centerInside">-->
@@ -65,7 +65,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/filledButton"
+        android:id="@+id/nextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"

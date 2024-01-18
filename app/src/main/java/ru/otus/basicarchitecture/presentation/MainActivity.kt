@@ -1,12 +1,25 @@
 package ru.otus.basicarchitecture.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import ru.otus.basicarchitecture.R
+import ru.otus.basicarchitecture.presentation.FirstScreen.FirstScreenFragment
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if(savedInstanceState == null ){
+            val fragment = FirstScreenFragment.instance()
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
+
     }
 }

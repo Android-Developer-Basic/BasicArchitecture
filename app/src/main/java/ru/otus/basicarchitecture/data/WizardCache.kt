@@ -6,6 +6,7 @@ import ru.otus.basicarchitecture.domain.Model.Person
 
 
 class WizardCache {
+
     private var resultDataModel: ResultDataModel? = null
 
 }

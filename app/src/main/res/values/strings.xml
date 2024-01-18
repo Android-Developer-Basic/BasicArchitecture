@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">BasicArchitecture</string>
     <string name="hintName">Name</string>
-    <string name="surnameHint">Surname</string>
+    <string name="surNameHint">Surname</string>
     <string name="DateOfBirthHint">Date of Birth</string>
     <string name="textButton">Next</string>
 </resources>
