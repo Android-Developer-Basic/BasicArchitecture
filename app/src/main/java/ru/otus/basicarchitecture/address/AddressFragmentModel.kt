@@ -4,13 +4,18 @@ import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.domain.DadataRepository
+import com.example.domain.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import ru.otus.basicarchitecture.DataCacheStorage
 import javax.inject.Inject
 
 @HiltViewModel
-class AddressFragmentModel @Inject constructor(private val dataCacheStorage: DataCacheStorage): ViewModel(){
+class AddressFragmentModel @Inject constructor(private val dataCacheStorage: DataCacheStorage, private val dadataRepository: DadataRepository): ViewModel(){
     private val _state = MutableLiveData<AddressFragmentState>()
+
     val addressFragmentState: LiveData<AddressFragmentState> = _state
 
     init {
@@ -50,4 +55,26 @@ class AddressFragmentModel @Inject constructor(private val dataCacheStorage: Dat
             )
         )
     }
+    fun getAddressSuggestions(query: String) {
+        viewModelScope.launch {
+            dadataRepository.getAddressSuggestions(query).collect { viewState ->
+                when (viewState) {
+                    is ViewState.Loading -> {
+                        // Handle loading state
+                    }
+                    is ViewState.Success -> {
+                        // Handle success state
+                        val addressSuggestions = viewState.data
+                        // Use address suggestions
+                    }
+                    is ViewState.Error -> {
+                        // Handle error state
+                        val exception = viewState.exception
+                        // Handle exception
+                    }
+                }
+            }
+        }
+    }
+
 }
