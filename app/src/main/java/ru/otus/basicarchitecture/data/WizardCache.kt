@@ -3,19 +3,21 @@ package ru.otus.basicarchitecture.data
 import ru.otus.basicarchitecture.domain.Model.Address
 import ru.otus.basicarchitecture.domain.Model.Interests
 import ru.otus.basicarchitecture.domain.Model.Person
+import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
+data class WizardCache(
+    //person
+    var firstName: String,
+    var surName: String,
+    var dateOfBirth: String,
 
-class WizardCache {
+    //address
+    var country: String,
+    var city: String,
+    var address: String,
 
-    private var resultDataModel: ResultDataModel? = null
-
-}
-
-
-//комментарии на уточнить - не уверен что модель из домаина должна находится в дата слое
-//не знаю в каком слое делать парсер
-private data class ResultDataModel(
-    val person: Person,
-    val address: Address,
-    val interests: Interests
+    //interests
+    var interests:  String
 )

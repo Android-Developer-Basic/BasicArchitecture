@@ -2,22 +2,16 @@ package ru.otus.basicarchitecture.presentation.FirstScreen
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.otus.basicarchitecture.data.RepositoryImpl
 import ru.otus.basicarchitecture.domain.Model.Person
-import ru.otus.basicarchitecture.domain.Repository
 import ru.otus.basicarchitecture.domain.setData.SetPersonUseCase
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
+import javax.inject.Inject
 
-class FirstScreenViewModel : ViewModel(){
-
-
-//    private val personMutableLiveData = MutableLiveData<Person>()
-//
-//
-//    val personLiveData = personMutableLiveData
-//
-    var repository = RepositoryImpl()
-    private val setPersonUseCase = SetPersonUseCase(repository)
-
+class FirstScreenViewModel @Inject constructor(
+    val setPersonUseCase: SetPersonUseCase
+) : ViewModel(){
 
     private val enabledButtonMutableLiveData = MutableLiveData<Boolean>()
     val enabledButtonLiveData = enabledButtonMutableLiveData
@@ -26,8 +20,44 @@ class FirstScreenViewModel : ViewModel(){
     private var surName = UNKNOWN_VALUE
     private var birthDate  = UNKNOWN_VALUE
 
-    fun validate(){
 
+    init {
+        enabledButtonMutableLiveData.postValue(true)
+    }
+
+    fun setData(name: String?, surName: String?, birthDate: String?, showToast: () -> Unit){
+        this.name = name ?: UNKNOWN_VALUE
+        this.surName = surName ?: UNKNOWN_VALUE
+        this.birthDate = birthDate ?: UNKNOWN_VALUE
+        validateEmptyValue(showToast)
+        val person = Person(this.name, this.surName, this.birthDate)
+        setPersonUseCase.setPerson(person)
+    }
+
+    fun validateEmptyValue(showToast: () -> Unit){
+        if(name == UNKNOWN_VALUE || surName == UNKNOWN_VALUE || birthDate == UNKNOWN_VALUE){
+            setupFalseButton(showToast)
+        }else {
+            enabledButtonMutableLiveData.postValue(true)
+        }
+    }
+
+    fun validData(day: Int, month: Int, year: Int, showToast: () -> Unit){
+        val correctAge = 18
+        val currentDate = LocalDate.now()
+        val monthText = if (month < 10) "0${month+1}" else "1${month+1}"
+        val selectedDateValue = LocalDate.parse("$year-$monthText-$day", DateTimeFormatter.ISO_DATE)
+        val diff = ChronoUnit.YEARS.between(selectedDateValue, currentDate)
+        if(diff < correctAge){
+            setupFalseButton(showToast)
+        }else{
+            enabledButtonLiveData.postValue(true)
+        }
+    }
+
+    private fun setupFalseButton(showToast: () -> Unit) {
+        enabledButtonMutableLiveData.postValue(false)
+        showToast.invoke()
     }
 
 

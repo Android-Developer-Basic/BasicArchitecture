@@ -1,6 +1,7 @@
 package ru.otus.basicarchitecture.domain.getData
 
-class GetInfoPersonUseCase {
+import ru.otus.basicarchitecture.domain.Repository
 
+class GetInfoPersonUseCase(val repository: Repository) {
 
 }

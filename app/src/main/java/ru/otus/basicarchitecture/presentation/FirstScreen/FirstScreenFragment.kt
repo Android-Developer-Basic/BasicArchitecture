@@ -1,5 +1,7 @@
 package ru.otus.basicarchitecture.presentation.FirstScreen
 
+import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
@@ -7,15 +9,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
+import ru.otus.basicarchitecture.App
 import ru.otus.basicarchitecture.R
+import ru.otus.basicarchitecture.presentation.ViewModelFactory
+import java.util.Calendar
+import java.util.Locale
+import javax.inject.Inject
 
 class FirstScreenFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[FirstScreenViewModel::class.java]
+    }
 
 
     private var screen = UNKNOWN_SCREEN
@@ -31,12 +46,12 @@ class FirstScreenFragment : Fragment() {
     private var surNameInputLayout: TextInputLayout? = null
     private var birthDateInputLayout: TextInputLayout? = null
 
-    private lateinit var viewModel: FirstScreenViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parseParam()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,13 +62,16 @@ class FirstScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[FirstScreenViewModel::class.java]
-        setupView(view)
-        nameEditText.apply {
-        }
 
+        (requireActivity().application as App).component
+            .firstScreenSubComponent()
+            .build()
+            .inject(this)
+
+        setupView(view)
 
     }
+
 
     private fun setupView(view: View) {
         with(view) {
@@ -70,37 +88,103 @@ class FirstScreenFragment : Fragment() {
 
 
         }
+
+        nextButton?.let{ button ->
+            setListeners(button.context)
+            viewModel.enabledButtonLiveData.observe(viewLifecycleOwner){
+                button.isEnabled = it
+            }
+        }
         nameInputLayout?.apply {
-            hint = R.string.hintName.toString()
+            hint = context.getString(R.string.hintName)
         }
         surNameInputLayout?.apply {
-            hint = R.string.surNameHint.toString()
+            hint = context.getString(R.string.surNameHint)
         }
+
         birthDateInputLayout?.apply {
-            hint = R.string.DateOfBirthHint.toString()
+            hint = context.getString(R.string.DateOfBirthHint)
             startIconDrawable = ContextCompat.getDrawable(context, R.drawable.calendar)
-            startIconContentDescription = R.string.DateOfBirthHint.toString()
+            startIconContentDescription = context.getString(R.string.DateOfBirthHint)
         }
         birthDateEditText?.apply {
-            inputType = InputType.TYPE_DATETIME_VARIATION_DATE
+            inputType = InputType.TYPE_NULL
+        //    isEnabled = false
+            isCursorVisible = false
+            keyListener = null
+
+            onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+                if(hasFocus){
+                    showDatePicker(view.context)
+                }
+                this.clearFocus()
+            }
+
+         /*   setOnClickListener{
+                showDatePicker(it.context)
+            }*/
+
+        }
+
+
+
+    }
+
+
+
+    private fun setListeners(context: Context) {
+
+        nextButton?.setOnClickListener{
+            viewModel.setData(
+                nameEditText?.text.toString(),
+                surNameEditText?.text.toString(),
+                birthDateEditText?.text.toString()
+            ) { showToast(MESSAGE_TOAST_INVALIDATE_TEXT, it.context) }
         }
     }
 
-    private fun parseParam(){
+    // возможно надо перенести внутрь ViewModel
+    private fun showDatePicker(context: Context) {
+        val currentDate = Calendar.getInstance()
+        val datePicker = DatePickerDialog(
+            context,
+            { _, year, month, day ->
+                val selectedData =
+                    String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, day)
+                viewModel.validData(day, month, year,
+                    { showToast(MESSAGE_TOAST_INCORRECT_AGE, context) }
+                )
+                birthDateEditText?.setText(selectedData)
+            },
+            currentDate.get(Calendar.YEAR),
+            currentDate.get(Calendar.MONTH),
+            currentDate.get(Calendar.DAY_OF_MONTH)
+        )
+        datePicker.show()
+    }
+
+
+    private fun parseParam() {
         val args = requireArguments()
-        if(!args.containsKey(KEY_SCREEN_MODE)){
+        if (!args.containsKey(KEY_SCREEN_MODE)) {
             throw Exception(Exception_message)
         }
-        screen = requireArguments().getString(SCREEN_MODE) ?: throw Exception(Exception_message)
+        screen = requireArguments().getString(KEY_SCREEN_MODE) ?: throw Exception(Exception_message)
+    }
+
+    private fun showToast(message: String, context: Context) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
 
-    companion object{
+    companion object {
+        private val MESSAGE_TOAST_INVALIDATE_TEXT = "Есть незаполненные поля"
+        private val MESSAGE_TOAST_INCORRECT_AGE = "Возраст пользователя не может быть меньше 18"
         private const val Exception_message = "First fragment: unknown screen mode"
         private const val UNKNOWN_SCREEN = "unknown_screen"
         private const val KEY_SCREEN_MODE = "key_screen_mode"
         private const val SCREEN_MODE = "first_screen"
-        fun instance() : FirstScreenFragment {
+        fun instance(): FirstScreenFragment {
             return FirstScreenFragment().apply {
                 arguments = Bundle().apply {
                     putString(KEY_SCREEN_MODE, SCREEN_MODE)
