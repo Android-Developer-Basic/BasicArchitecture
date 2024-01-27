@@ -17,11 +17,11 @@ android {
     }
 
     defaultConfig {
-        minSdk = 34
+        minSdk = 24
 
         val properties = Properties()
         properties.load(rootProject.file("api_keys.properties").inputStream())
-        buildConfigField("String", "API_KEY", properties.getProperty("API_KEY") ?: "")
+        buildConfigField("String", "API_KEY", """"${properties.getProperty("API_KEY") ?: ""}"""")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -46,7 +46,7 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":domain"))
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
@@ -54,10 +54,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
-    implementation ("com.android.support:appcompat-v7:28.0.0")
-    implementation ("com.google.android.gms:play-services-maps:17.0.1")
-
     implementation("com.google.dagger:hilt-android:2.50")
+    implementation(project(":domain"))
     kapt("com.google.dagger:hilt-compiler:2.50")
 
     testImplementation("junit:junit:4.13.2")

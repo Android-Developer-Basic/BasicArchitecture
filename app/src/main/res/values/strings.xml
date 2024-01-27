@@ -11,7 +11,6 @@
     <string name="countryHint">Country</string>
     <string name="cityHint">City</string>
     <string name="addressHint">Address</string>
-    <string name="interest">Music</string>
     <string name="interestsLabel">Interests</string>
     <string name="birthdayLabel">Date of Birth</string>
 </resources>

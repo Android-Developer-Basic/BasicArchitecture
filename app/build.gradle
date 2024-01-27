@@ -38,6 +38,10 @@ android {
     }
 }
 
+hilt {
+    enableAggregatingTask = true
+}
+
 /*buildscript {
     repositories {
         google()
