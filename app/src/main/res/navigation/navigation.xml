@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/personalData">
+
+    <fragment
+        android:id="@+id/personalData"
+        android:name="ru.otus.basicarchitecture.personal.PersonalDataFragment"
+        tools:layout="@layout/personal_data_fragment">
+        <action
+            android:id="@+id/personalDataNext"
+            app:destination="@+id/address"/>
+    </fragment>
+    <fragment
+        android:id="@+id/address"
+        android:name="ru.otus.basicarchitecture.address.AddressFragment"
+        tools:layout="@layout/address_fragment">
+        <action
+            android:id="@+id/addressNext"
+            app:destination="@+id/interestsContent"/>
+    </fragment>
+    <fragment
+        android:id="@+id/interestsContent"
+        android:name="ru.otus.basicarchitecture.interests.InterestsFragment"
+        tools:layout="@layout/interests_fragment">
+        <action
+            android:id="@+id/interestsNext"
+            app:destination="@+id/summary"/>
+    </fragment>
+    <fragment
+        android:id="@+id/summary"
+        android:name="ru.otus.basicarchitecture.summary.SummaryFragment"
+        tools:layout="@layout/summary_fragment"/>
+
+</navigation>
