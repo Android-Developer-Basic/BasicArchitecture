@@ -1,8 +1,5 @@
 package ru.otus.basicarchitecture.address
 
-data class AddressFragmentState (
-    val country: String = "",
-    val city: String = "",
-    val address: String = "",
-    val accessNextButton: Boolean = false,
-)
+import com.example.domain.data.Address
+
+data class AddressFragmentViewState(val address: String, val addressList: List<Address>)
