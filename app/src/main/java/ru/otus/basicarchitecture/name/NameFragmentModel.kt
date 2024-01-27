@@ -1,80 +1,61 @@
 package ru.otus.basicarchitecture.name
 
 import android.os.Build
-import android.text.Editable
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ru.otus.basicarchitecture.DataCacheStorage
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import ru.otus.basicarchitecture.wizardCache.RegistrationData
+import ru.otus.basicarchitecture.wizardCache.WizardCache
 import java.time.LocalDate
 import java.time.Period
 import java.time.ZoneId
 import java.util.Date
 import javax.inject.Inject
 
-
+/**
+ * View-model for [NameFragment]
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 @HiltViewModel
-class NameFragmentModel @Inject constructor(private val dataCacheStorage: DataCacheStorage) : ViewModel() {
+class NameFragmentModel @Inject constructor(private val cache: WizardCache) :
+    ViewModel() {
+    val viewState: StateFlow<NameFragmentViewState> = cache.state.map { render(it) }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, render(cache.state.value))
 
-    private val _state = MutableLiveData<NameFragmentState>()
-    val nameFragmentState: LiveData<NameFragmentState> = _state
+    fun setName(name: String) {
+        cache.setName(name)
+    }
 
-    init {
-        _state.postValue(
-            NameFragmentState(
-                dataCacheStorage.cache.value?.name ?: "",
-                dataCacheStorage.cache.value?.surname ?: "",
-                dataCacheStorage.cache.value?.birthday ?: Date(),
-                isAdult = checkIsAdult(dataCacheStorage.cache.value?.birthday ?: Date()),
-                accessNextButton = checkedAssessButton(),
-            )
-        )
+    fun setSurname(surname: String) {
+        cache.setSurname(surname)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun setBirthday(birthday: Date) {
+        cache.setBirthday(birthday)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun checkIsAdult(birthday: Date): Boolean {
         val birthdayDate = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
         val todayDate = LocalDate.now()
-        return Period.between(birthdayDate,todayDate).years >= 18
+        return Period.between(birthdayDate, todayDate).years >= 18
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun onSetAge(birthday: Date) {
-        val currentState = _state.value ?: NameFragmentState()
-        _state.postValue(
-            currentState.copy(
-                date = birthday,
-                isAdult = checkIsAdult(birthday),
-                accessNextButton = checkedAssessButton(),
-            )
-        )
+    private fun checkedAssessButton(data: RegistrationData): Boolean {
+        return data.name.length > 2 && data.surname.length > 2 && checkIsAdult(data.birthday)
     }
 
-    fun onNextButtonClicked() {
-        dataCacheStorage.cache.value = dataCacheStorage.cache.value?.copy(
-            name = _state.value?.name.toString(),
-            surname = _state.value?.surname.toString(),
-            birthday = _state.value?.date ?: Date()
+    private fun render(data: RegistrationData) =
+        NameFragmentViewState(
+            data.name,
+            data.surname,
+            data.birthday,
+            checkedAssessButton(data)
         )
-    }
-
-    fun checkTextFields(nameText: Editable?, surnameText: Editable?) {
-        val currentState = _state.value ?: NameFragmentState()
-        _state.postValue(
-            currentState.copy(
-                name = nameText.toString(),
-                surname = surnameText.toString(),
-                accessNextButton = checkedAssessButton(),
-            )
-        )
-    }
-    private fun checkedAssessButton(): Boolean {
-        return /*_state.value?.name?.isNotEmpty() == true && _state.value?.surname?.isNotEmpty() == true &&*/ _state.value?.isAdult == true
-    }
-    fun isButtonEnabled(): Boolean {
-        return _state.value?.accessNextButton ?: false
-    }
 }
