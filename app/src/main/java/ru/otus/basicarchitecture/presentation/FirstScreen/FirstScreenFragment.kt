@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -17,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
 import ru.otus.basicarchitecture.App
 import ru.otus.basicarchitecture.R
+import ru.otus.basicarchitecture.presentation.SecondScreen.SecondScreenFragment
 import ru.otus.basicarchitecture.presentation.ViewModelFactory
 import java.util.Calendar
 import java.util.Locale
@@ -33,8 +33,6 @@ class FirstScreenFragment : Fragment() {
     }
 
 
-    private var screen = UNKNOWN_SCREEN
-
     private var nextButton: Button? = null
 
     private var nameEditText: EditText? = null
@@ -47,10 +45,10 @@ class FirstScreenFragment : Fragment() {
     private var birthDateInputLayout: TextInputLayout? = null
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseParam()
-    }
+    /*    override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            parseParam()
+        }*/
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,9 +87,9 @@ class FirstScreenFragment : Fragment() {
 
         }
 
-        nextButton?.let{ button ->
-            setListeners(button.context)
-            viewModel.enabledButtonLiveData.observe(viewLifecycleOwner){
+        nextButton?.let { button ->
+            setListeners()
+            viewModel.enabledButtonLiveData.observe(viewLifecycleOwner) {
                 button.isEnabled = it
             }
         }
@@ -109,38 +107,42 @@ class FirstScreenFragment : Fragment() {
         }
         birthDateEditText?.apply {
             inputType = InputType.TYPE_NULL
-        //    isEnabled = false
+            //    isEnabled = false
             isCursorVisible = false
             keyListener = null
 
             onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
-                if(hasFocus){
+                if (hasFocus) {
                     showDatePicker(view.context)
                 }
                 this.clearFocus()
             }
 
-         /*   setOnClickListener{
-                showDatePicker(it.context)
-            }*/
-
         }
-
 
 
     }
 
 
-
-    private fun setListeners(context: Context) {
-
-        nextButton?.setOnClickListener{
+    private fun setListeners() {
+        nextButton?.setOnClickListener {
             viewModel.setData(
                 nameEditText?.text.toString(),
                 surNameEditText?.text.toString(),
-                birthDateEditText?.text.toString()
-            ) { showToast(MESSAGE_TOAST_INVALIDATE_TEXT, it.context) }
+                birthDateEditText?.text.toString(),
+                { showToast(MESSAGE_TOAST_INVALIDATE_TEXT, it.context) },
+                { openSecondFragment() }
+            )
         }
+    }
+
+    private fun openSecondFragment() {
+        val fragment = SecondScreenFragment.instance()
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     // возможно надо перенести внутрь ViewModel
@@ -164,13 +166,7 @@ class FirstScreenFragment : Fragment() {
     }
 
 
-    private fun parseParam() {
-        val args = requireArguments()
-        if (!args.containsKey(KEY_SCREEN_MODE)) {
-            throw Exception(Exception_message)
-        }
-        screen = requireArguments().getString(KEY_SCREEN_MODE) ?: throw Exception(Exception_message)
-    }
+
 
     private fun showToast(message: String, context: Context) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
@@ -178,18 +174,12 @@ class FirstScreenFragment : Fragment() {
 
 
     companion object {
-        private val MESSAGE_TOAST_INVALIDATE_TEXT = "Есть незаполненные поля"
-        private val MESSAGE_TOAST_INCORRECT_AGE = "Возраст пользователя не может быть меньше 18"
-        private const val Exception_message = "First fragment: unknown screen mode"
-        private const val UNKNOWN_SCREEN = "unknown_screen"
-        private const val KEY_SCREEN_MODE = "key_screen_mode"
-        private const val SCREEN_MODE = "first_screen"
+        private const val MESSAGE_TOAST_INVALIDATE_TEXT = "Есть незаполненные поля"
+        private const val MESSAGE_TOAST_INCORRECT_AGE ="Возраст пользователя не может быть меньше 18"
+
+
         fun instance(): FirstScreenFragment {
-            return FirstScreenFragment().apply {
-                arguments = Bundle().apply {
-                    putString(KEY_SCREEN_MODE, SCREEN_MODE)
-                }
-            }
+            return FirstScreenFragment()
         }
     }
 }

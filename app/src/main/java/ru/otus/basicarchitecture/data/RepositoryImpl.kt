@@ -37,6 +37,10 @@ class RepositoryImpl @Inject constructor(
         updateWizardCache()
     }
 
+    override fun getInfoPersonUseCase() {
+
+    }
+
     private fun updateWizardCache() {
         mutableLiveDataWizardCache.postValue(wizardCache)
     }

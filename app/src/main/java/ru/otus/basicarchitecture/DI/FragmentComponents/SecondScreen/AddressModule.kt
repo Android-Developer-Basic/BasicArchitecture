@@ -1,19 +1,17 @@
-package ru.otus.basicarchitecture.DI.FragmentComponents.FirstScreen
+package ru.otus.basicarchitecture.DI.FragmentComponents.SecondScreen
 
 import dagger.Module
 import dagger.Provides
 import ru.otus.basicarchitecture.DI.FragmentComponents.FragmentScope
 import ru.otus.basicarchitecture.domain.Model.Address
-import ru.otus.basicarchitecture.domain.Model.Person
 
 @Module
-class PersonModule {
+class AddressModule {
     @FragmentScope
     @Provides
-    fun providePerson(): Person{
-        return Person.defaultPerson()
+    fun providesAddress(): Address{
+        return Address("","","")
     }
 
 
 }
-

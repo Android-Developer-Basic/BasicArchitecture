@@ -8,7 +8,7 @@ import dagger.multibindings.StringKey
 import ru.otus.basicarchitecture.presentation.FirstScreen.FirstScreenViewModel
 
 @Module
-interface ViewModelModule {
+interface FirstViewModelModule {
 
     @IntoMap
     @StringKey("FirstScreenViewModel")

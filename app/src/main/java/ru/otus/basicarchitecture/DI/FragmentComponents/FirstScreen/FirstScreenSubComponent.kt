@@ -9,7 +9,7 @@ import ru.otus.basicarchitecture.presentation.FirstScreen.FirstScreenFragment
  * Подкомпонент для первого фрагмента
  */
 @FragmentScope
-@Subcomponent(modules = [PersonModule::class, ViewModelModule::class])
+@Subcomponent(modules = [PersonModule::class, FirstViewModelModule::class])
 interface FirstScreenSubComponent {
 
     @Subcomponent.Builder

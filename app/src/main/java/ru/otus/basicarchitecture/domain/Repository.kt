@@ -14,7 +14,5 @@ interface Repository {
     fun setAddress(address: Address)
 
 
-
-
-    //fun getInfoPersonUseCase()
+    fun getInfoPersonUseCase()
 }
