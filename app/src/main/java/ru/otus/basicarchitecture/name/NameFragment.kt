@@ -47,7 +47,7 @@ class NameFragment : Fragment(R.layout.fragment_name) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 nameViewModelInstance.viewState.collect {
                     nameField.setTextKeepState(it.name)
-                    surnameField.setTextKeepState(it.name)
+                    surnameField.setTextKeepState(it.surname)
                     val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.US)
                     birthdayField.setTextKeepState(sdf.format(it.date))
                     nextButton.isEnabled = it.accessNextButton

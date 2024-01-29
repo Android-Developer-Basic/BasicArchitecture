@@ -79,8 +79,12 @@ class AddressFragmentModel @Inject constructor(
         }
     }
 
+    private fun checkedAssessButton(data: RegistrationData): Boolean {
+        return data.address.length > 2
+    }
+
     private fun render(data: RegistrationData, addresses: List<Address>) =
-        AddressFragmentViewState(data.address, addresses)
+        AddressFragmentViewState(data.address, addresses, checkedAssessButton(data))
 }
 
 /**

@@ -5,5 +5,5 @@ data class QuestionnaireModelState(
     val surname: String = "",
     val birthday: String = "",
     val address: String = "",
-    val selectedInterests: List<String> = emptyList()
+    val selectedInterests: Set<String> = emptySet()
 )

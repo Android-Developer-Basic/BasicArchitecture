@@ -13,24 +13,30 @@ class WizardCache @Inject constructor() {
 
     val state: StateFlow<RegistrationData> get() = _state.asStateFlow()
 
-    fun setName(name: String){
+    fun setName(name: String) {
         _state.value = _state.value.copy(name = name)
     }
 
-    fun setSurname(surname: String){
+    fun setSurname(surname: String) {
         _state.value = _state.value.copy(surname = surname)
     }
 
-    fun setBirthday(birthday: Date){
+    fun setBirthday(birthday: Date) {
         _state.value = _state.value.copy(birthday = birthday)
     }
 
-    fun setAddress(address: String){
+    fun setAddress(address: String) {
         _state.value = _state.value.copy(address = address)
     }
 
-    fun setInterests(interests: List<String>){
-        _state.value = _state.value.copy(selectedInterests = interests)
+    fun setInterests(interests: String) {
+        _state.value =
+            _state.value.copy(selectedInterests = _state.value.selectedInterests.plus(interests))
+    }
+
+    fun removeInterests(interests: String) {
+        _state.value =
+            _state.value.copy(selectedInterests = _state.value.selectedInterests.minus(interests))
     }
 }
 
@@ -39,8 +45,8 @@ data class RegistrationData(
     val surname: String = "",
     val birthday: Date = Date(),
     val address: String = "",
-    val selectedInterests: List<String> = emptyList(),
+    val selectedInterests: Set<String> = emptySet(),
 ) {
-    val listOfInterests: List<String> =
-        listOf("Music", "Cocking", "Walking", "Working", "Picture", "Travels", "Film", "Series")
+    val listOfInterests: Set<String> =
+        setOf("Music", "Cocking", "Walking", "Working", "Picture", "Travels", "Film", "Series")
 }

@@ -1,7 +1,7 @@
 package com.example.net
 
-import com.example.domain.DaDataRepository
-import com.example.net.data.AddressDto
+import com.example.net.data.AddressRequest
+import com.example.net.data.AddressResponse
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -13,12 +13,12 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.http.Body
 import retrofit2.http.POST
-import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-private const val BASE_URL = "https://dadata.ru"
+private const val BASE_URL = "https://suggestions.dadata.ru/"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -45,19 +45,14 @@ class DaDataService {
 
     @Singleton
     @Provides
-    fun provideDaDataRepository(retrofit: Retrofit): DaDataRepository {
-        return DaDataRepositoryImpl(retrofit.create(DaDataApi::class.java))
+    fun provideDaDataApi(retrofit: Retrofit): DaDataApi {
+        return retrofit.create(DaDataApi::class.java)
     }
 }
 
-internal interface DaDataApi {
+interface DaDataApi {
     @POST("/suggestions/api/4_1/rs/suggest/address")
-    suspend fun getAddress(
-        @Query("query") query: String,
-        @Query("division") domain: String = "administrative",
-        @Query("limit") limit: Int = 5,
-        @Query("locale") locale: String = "ru",
-    ): Response<List<AddressDto>>
+    suspend fun getAddress(@Body requestBody: AddressRequest): Response<AddressResponse>
 }
 
 private val interceptor: Interceptor = Interceptor { chain ->

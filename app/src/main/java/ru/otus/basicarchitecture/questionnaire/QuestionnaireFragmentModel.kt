@@ -1,37 +1,38 @@
 package ru.otus.basicarchitecture.questionnaire
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ru.otus.basicarchitecture.DataCacheStorage
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import ru.otus.basicarchitecture.wizardCache.RegistrationData
+import ru.otus.basicarchitecture.wizardCache.WizardCache
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class QuestionnaireFragmentModel @Inject constructor(dataCacheStorage: DataCacheStorage): ViewModel() {
-    private val _state = MutableLiveData<QuestionnaireModelState>()
-    val questionnaireState: LiveData<QuestionnaireModelState> = _state
+class QuestionnaireFragmentModel @Inject constructor(cache: WizardCache) : ViewModel() {
+    val viewState: StateFlow<QuestionnaireModelState> = cache.state.map { render(it) }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, render(cache.state.value))
 
-    private fun dateConverter(date : Date?): String {
+    private fun dateConverter(date: Date?): String {
         return if (date != null) {
             SimpleDateFormat("dd.MM.yyyy", Locale.UK).format(date.time)
         } else ""
     }
 
-    init {
-        _state.postValue(
-            QuestionnaireModelState(
-                dataCacheStorage.cache.value?.name ?: "",
-                dataCacheStorage.cache.value?.surname ?: "",
-                dateConverter(dataCacheStorage.cache.value?.birthday),
-                "${dataCacheStorage.cache.value?.country} ${dataCacheStorage.cache.value?.city} ${dataCacheStorage.cache.value?.address}",
-                dataCacheStorage.cache.value?.selectedInterests ?: emptyList()
-            )
+    private fun render(data: RegistrationData) =
+        QuestionnaireModelState(
+            data.name,
+            data.surname,
+            dateConverter(data.birthday),
+            data.address,
+            data.selectedInterests
         )
-    }
 
 
 }
