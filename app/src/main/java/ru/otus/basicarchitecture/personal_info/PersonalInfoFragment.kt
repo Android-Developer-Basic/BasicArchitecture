@@ -3,7 +3,6 @@ package ru.otus.basicarchitecture.personal_info
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.otus.basicarchitecture.R
@@ -43,7 +43,7 @@ class PersonalInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         withBinding {
             buttonMoveToFragmentAddress.setOnClickListener {
-                Log.d("PersonalInfoFragment", "Next Fragment")
+                findNavController().navigate(R.id.action_personalInfoFragment_to_addressInfoFragment)
             }
 
             viewLifecycleOwner.lifecycleScope.launch {

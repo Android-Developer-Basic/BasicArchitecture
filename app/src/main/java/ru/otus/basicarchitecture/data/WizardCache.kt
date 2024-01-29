@@ -6,28 +6,56 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
-interface WizardCache {
+
+interface PersonalInformation {
+    val personalInfo: StateFlow<PersonalInformationData>
     fun setName(name: String)
     fun setSurname(surname: String)
     fun setDateOfBirth(dateOfBirth: String)
+}
 
-    @ActivityRetainedScoped
-    class Base @Inject constructor() : WizardCache {
-        private val _personalInfo: MutableStateFlow<PersonalInformationData> = MutableStateFlow(PersonalInformationData())
-        val personalInfo: StateFlow<PersonalInformationData> get() = _personalInfo.asStateFlow()
+interface AddressInformation {
+    val addressInfo: StateFlow<AddressInformationData>
+    fun setCountry(country: String)
+    fun setCity(city: String)
+    fun setAddress(address: String)
+}
 
-        override fun setName(name: String) {
-            _personalInfo.value = _personalInfo.value.copy(name = name)
-        }
+@ActivityRetainedScoped
+class WizardCache @Inject constructor() : PersonalInformation, AddressInformation {
+    private val _personalInfo: MutableStateFlow<PersonalInformationData> =
+        MutableStateFlow(PersonalInformationData())
+    override val personalInfo: StateFlow<PersonalInformationData> get() = _personalInfo.asStateFlow()
 
-        override fun setSurname(surname: String) {
-            _personalInfo.value = _personalInfo.value.copy(surname = surname)
-        }
 
-        override fun setDateOfBirth(dateOfBirth: String) {
-            _personalInfo.value = _personalInfo.value.copy(dateOfBirth = dateOfBirth)
-        }
+    private val _addressInfo: MutableStateFlow<AddressInformationData> =
+        MutableStateFlow(AddressInformationData())
+    override val addressInfo: StateFlow<AddressInformationData> get() = _addressInfo.asStateFlow()
+
+    override fun setName(name: String) {
+        _personalInfo.value = _personalInfo.value.copy(name = name)
+    }
+
+    override fun setSurname(surname: String) {
+        _personalInfo.value = _personalInfo.value.copy(surname = surname)
+    }
+
+    override fun setDateOfBirth(dateOfBirth: String) {
+        _personalInfo.value = _personalInfo.value.copy(dateOfBirth = dateOfBirth)
+    }
+
+    override fun setCountry(country: String) {
+        _addressInfo.value = _addressInfo.value.copy(country = country)
+    }
+
+    override fun setCity(city: String) {
+        _addressInfo.value = _addressInfo.value.copy(city = city)
+    }
+
+    override fun setAddress(address: String) {
+        _addressInfo.value = _addressInfo.value.copy(address = address)
     }
 }
 
 data class PersonalInformationData(val name: String = "", val surname: String = "", val dateOfBirth: String = "")
+data class AddressInformationData(val country: String = "", val city: String = "", val address: String = "")

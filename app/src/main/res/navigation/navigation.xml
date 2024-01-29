@@ -9,5 +9,14 @@
         android:id="@+id/personalInfoFragment"
         android:name="ru.otus.basicarchitecture.personal_info.PersonalInfoFragment"
         android:label="personal_info_fragment"
-        tools:layout="@layout/personal_info_fragment" />
+        tools:layout="@layout/personal_info_fragment" >
+        <action
+            android:id="@+id/action_personalInfoFragment_to_addressInfoFragment"
+            app:destination="@id/addressInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressInfoFragment"
+        android:name="ru.otus.basicarchitecture.address_info.AddressInfoFragment"
+        android:label="fragment_address_info"
+        tools:layout="@layout/fragment_address_info" />
 </navigation>

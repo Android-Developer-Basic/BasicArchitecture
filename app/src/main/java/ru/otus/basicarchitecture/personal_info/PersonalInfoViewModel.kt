@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PersonalInfoViewModel @Inject constructor(
-    private val cache: WizardCache.Base
+    private val cache: WizardCache
 ) : ViewModel() {
 
     val viewState: StateFlow<PersonalInfoViewState> = cache.personalInfo
@@ -46,7 +46,7 @@ class PersonalInfoViewModel @Inject constructor(
         isValidNameOrSurname(data.surname),
         isValidDateOfBirth(data.dateOfBirth))
 
-    private fun isValidNameOrSurname(name: String) = name.length >= 2
+    private fun isValidNameOrSurname(name: String) = name.length > 2
     private fun isValidDateOfBirth(dateOfBirth: String): Boolean {
 
         if (dateOfBirth.isEmpty()) return false
