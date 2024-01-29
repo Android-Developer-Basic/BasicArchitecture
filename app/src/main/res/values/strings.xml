@@ -6,4 +6,6 @@
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="date_of_birth">Date of Birth</string>
+    <string name="name_error">Enter at least 2 characters.</string>
+    <string name="date_of_birth_error">Must be 18 years old.</string>
 </resources>

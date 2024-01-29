@@ -9,6 +9,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import ru.otus.basicarchitecture.data.PersonalInformationData
 import ru.otus.basicarchitecture.data.WizardCache
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,7 +31,8 @@ class PersonalInfoViewModel @Inject constructor(
         cache.setSurname(surname)
     }
 
-    fun setDateOfBirth(dateOfBirth: String) {
+    fun setDateOfBirth(year: Int, month: Int, dayOfMonth: Int) {
+        val dateOfBirth = String.format("%02d.%02d.%04d", dayOfMonth, month + 1, year)
         cache.setDateOfBirth(dateOfBirth)
     }
 
@@ -38,17 +42,35 @@ class PersonalInfoViewModel @Inject constructor(
         data.name,
         data.surname,
         data.dateOfBirth,
-        isValidNameOrSurname(data.name) &&
-                isValidNameOrSurname(data.surname) &&
-                isValidDateOfBirth(data.dateOfBirth) )
+        isValidNameOrSurname(data.name),
+        isValidNameOrSurname(data.surname),
+        isValidDateOfBirth(data.dateOfBirth))
 
-    private fun isValidNameOrSurname(name: String) = name.length > 2
-    private fun isValidDateOfBirth(dateOfBirth: String) = dateOfBirth.length > 2
+    private fun isValidNameOrSurname(name: String) = name.length >= 2
+    private fun isValidDateOfBirth(dateOfBirth: String): Boolean {
+
+        if (dateOfBirth.isEmpty()) return false
+
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val currentDate = Calendar.getInstance().time
+        val currentDateCalendar = Calendar.getInstance()
+        currentDateCalendar.time = currentDate
+
+        val selectedDate = dateFormat.parse(dateOfBirth)
+        val selectedDateCalendar = Calendar.getInstance()
+        selectedDateCalendar.time = selectedDate
+
+        selectedDateCalendar.add(Calendar.YEAR, 18)
+
+        return selectedDateCalendar.before(currentDateCalendar)
+    }
 }
 
 data class PersonalInfoViewState(
     val name: String,
     val surname: String,
     val dateOfBirth: String,
-    val nextEnabled: Boolean
+    val isValidName: Boolean,
+    val isValidSurname: Boolean,
+    val isValidDateOfBirth: Boolean
 )
