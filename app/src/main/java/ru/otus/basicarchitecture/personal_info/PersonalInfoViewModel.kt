@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import ru.otus.basicarchitecture.data.PersonalInformation
 import ru.otus.basicarchitecture.data.PersonalInformationData
 import ru.otus.basicarchitecture.data.WizardCache
 import java.text.SimpleDateFormat
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PersonalInfoViewModel @Inject constructor(
-    private val cache: WizardCache
+    private val cache: PersonalInformation<WizardCache>
 ) : ViewModel() {
 
     val viewState: StateFlow<PersonalInfoViewState> = cache.personalInfo

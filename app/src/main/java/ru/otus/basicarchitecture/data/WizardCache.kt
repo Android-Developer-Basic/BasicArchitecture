@@ -7,14 +7,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 
-interface PersonalInformation {
+interface PersonalInformation<T> {
     val personalInfo: StateFlow<PersonalInformationData>
     fun setName(name: String)
     fun setSurname(surname: String)
     fun setDateOfBirth(dateOfBirth: String)
 }
 
-interface AddressInformation {
+interface AddressInformation<T> {
     val addressInfo: StateFlow<AddressInformationData>
     fun setCountry(country: String)
     fun setCity(city: String)
@@ -22,11 +22,10 @@ interface AddressInformation {
 }
 
 @ActivityRetainedScoped
-class WizardCache @Inject constructor() : PersonalInformation, AddressInformation {
+class WizardCache @Inject constructor() : PersonalInformation<Any?>, AddressInformation<Any?> {
     private val _personalInfo: MutableStateFlow<PersonalInformationData> =
         MutableStateFlow(PersonalInformationData())
     override val personalInfo: StateFlow<PersonalInformationData> get() = _personalInfo.asStateFlow()
-
 
     private val _addressInfo: MutableStateFlow<AddressInformationData> =
         MutableStateFlow(AddressInformationData())

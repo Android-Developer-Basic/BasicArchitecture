@@ -7,13 +7,14 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import ru.otus.basicarchitecture.data.AddressInformation
 import ru.otus.basicarchitecture.data.AddressInformationData
 import ru.otus.basicarchitecture.data.WizardCache
 import javax.inject.Inject
 
 @HiltViewModel
 class AddressInfoViewModel @Inject constructor(
-    private val cache: WizardCache
+    private val cache: AddressInformation<WizardCache>
 ) : ViewModel() {
 
     val viewState: StateFlow<AddressInfoViewState> = cache.addressInfo
