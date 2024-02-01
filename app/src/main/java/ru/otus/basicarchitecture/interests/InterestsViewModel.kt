@@ -20,6 +20,9 @@ class InterestsViewModel @Inject constructor(
         "Music", "Travel", "Photography", "Cooking", "Sports",
         "Reading", "Gaming", "Art", "Hiking", "Dancing")
 
+    fun getInterestChecked(interest: String) : Boolean {
+        return cache.interestInformation.value.selectedInterest.contains(interest)
+    }
 
     fun updateInterest(interest: String){
         cache.updateInterest(interest)

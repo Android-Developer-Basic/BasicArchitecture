@@ -55,6 +55,10 @@ class AddressInfoFragment : Fragment() {
                 }
             }
 
+            addressInfoCountry.setTextKeepState(viewModel.viewState.value.country)
+            addressInfoCity.setTextKeepState(viewModel.viewState.value.city)
+            addressInfoAddress.setTextKeepState(viewModel.viewState.value.address)
+
             addressInfoCountry.addTextChangedListener {
                 viewModel.setCountry(it.toString())
             }

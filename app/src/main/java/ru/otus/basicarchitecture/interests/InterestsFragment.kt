@@ -59,8 +59,8 @@ class InterestsFragment : Fragment() {
                     text = tag
                     isClickable = true
                     isCheckable = true
+                    isChecked = viewModel.getInterestChecked(tag)
                     setOnCheckedChangeListener { buttonView, isChecked ->
-                        Log.d("Test", "buttonView = ${buttonView.text} isChecked = $isChecked")
                         viewModel.updateInterest(tag)
                     }
                     chipGroupTags.addView(this)

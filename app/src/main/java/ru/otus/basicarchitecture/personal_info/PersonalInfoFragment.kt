@@ -77,6 +77,10 @@ class PersonalInfoFragment : Fragment() {
                 }
             }
 
+            personalInfoName.setTextKeepState(viewModel.viewState.value.name)
+            personalInfoSurname.setTextKeepState(viewModel.viewState.value.surname)
+            personalInfoDateOfBirth.setTextKeepState(viewModel.viewState.value.dateOfBirth)
+
             personalInfoName.addTextChangedListener {
                 viewModel.setName(it.toString())
             }
