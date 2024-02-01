@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 
+
 interface PersonalInformation {
     val personalInfo: StateFlow<PersonalInformationData>
     fun setName(name: String)

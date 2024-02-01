@@ -27,5 +27,14 @@
         android:id="@+id/interestsFragment"
         android:name="ru.otus.basicarchitecture.interests.InterestsFragment"
         android:label="fragment_interests"
-        tools:layout="@layout/fragment_interests" />
+        tools:layout="@layout/fragment_interests" >
+        <action
+            android:id="@+id/action_interestsFragment_to_summaryFragment"
+            app:destination="@id/summaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/summaryFragment"
+        android:name="ru.otus.basicarchitecture.summary.SummaryFragment"
+        android:label="fragment_summary"
+        tools:layout="@layout/fragment_summary" />
 </navigation>
