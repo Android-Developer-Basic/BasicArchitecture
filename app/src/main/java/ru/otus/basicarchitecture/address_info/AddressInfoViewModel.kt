@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddressInfoViewModel @Inject constructor(
-    private val cache: AddressInformation<WizardCache>
+    private val cache: WizardCache
 ) : ViewModel() {
 
     val viewState: StateFlow<AddressInfoViewState> = cache.addressInfo

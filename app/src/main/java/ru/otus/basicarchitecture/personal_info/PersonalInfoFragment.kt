@@ -64,7 +64,7 @@ class PersonalInfoFragment : Fragment() {
                             personalInfoSurname.error = resources.getString(R.string.name_error)
                         }
 
-                        //Я не понимаю почему. Но даже после ввода валидной даты. Ошибка продолжает показываться.
+                        // TODO Я не понимаю почему. Но даже после ввода валидной даты. Ошибка продолжает показываться. И не сбрасывается
                         if (it.isValidDateOfBirth) {
                             personalInfoDateOfBirth.setTextKeepState(it.dateOfBirth)
                         }

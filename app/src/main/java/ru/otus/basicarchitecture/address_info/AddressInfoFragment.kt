@@ -11,8 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import ru.otus.basicarchitecture.R
 import ru.otus.basicarchitecture.databinding.FragmentAddressInfoBinding
 
 @AndroidEntryPoint
@@ -38,7 +40,7 @@ class AddressInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         withBinding {
             buttonMoveToFragmentInterest.setOnClickListener {
-                Log.d("AddressInfoFragment", "Next Fragment")
+                findNavController().navigate(R.id.action_addressInfoFragment_to_interestsFragment)
             }
 
             viewLifecycleOwner.lifecycleScope.launch {
