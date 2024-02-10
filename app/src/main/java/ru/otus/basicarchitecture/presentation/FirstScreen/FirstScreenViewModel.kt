@@ -49,8 +49,9 @@ class FirstScreenViewModel @Inject constructor(
     fun validData(day: Int, month: Int, year: Int, showToast: () -> Unit) {
         val correctAge = 18
         val currentDate = LocalDate.now()
-        val monthText = if (month < 10) "0${month + 1}" else "1${month + 1}"
-        val selectedDateValue = LocalDate.parse("$year-$monthText-$day", DateTimeFormatter.ISO_DATE)
+        val monthText = if (month < 9) "0${month + 1}" else "${month + 1}"
+        val dayText = if (day<10) "0${day+1}" else "$day"
+        val selectedDateValue = LocalDate.parse("$year-$monthText-$dayText", DateTimeFormatter.ISO_DATE)
         val diff = ChronoUnit.YEARS.between(selectedDateValue, currentDate)
         if (diff < correctAge) {
             setupFalseButton(showToast)

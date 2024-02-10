@@ -15,4 +15,6 @@ interface Repository {
 
 
     fun getInfoPersonUseCase()
+
+    fun getListInterests(): List<String>
 }

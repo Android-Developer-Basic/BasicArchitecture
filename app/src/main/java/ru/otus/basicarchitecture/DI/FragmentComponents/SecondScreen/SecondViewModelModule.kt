@@ -12,6 +12,6 @@ interface SecondViewModelModule {
     @IntoMap
     @StringKey("SecondScreenViewModel")
     @Binds
-    fun bindFirstScreenViewModel(impl: SecondScreenViewModel): ViewModel
+    fun bindSecondScreenViewModel(impl: SecondScreenViewModel): ViewModel
 
 }
