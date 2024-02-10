@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import ru.otus.basicarchitecture.App
 import ru.otus.basicarchitecture.R
+import ru.otus.basicarchitecture.presentation.FourthScreen.FourthScreenFragment
+import ru.otus.basicarchitecture.presentation.SecondScreen.SecondScreenFragment
 import ru.otus.basicarchitecture.presentation.ViewModelFactory
 import javax.inject.Inject
 
@@ -29,6 +32,8 @@ class ThirdScreenFragment : Fragment() {
     }
 
     private var recyclerView: RecyclerView? = null
+
+    private var button: Button? = null
 
 
     override fun onCreateView(
@@ -53,6 +58,22 @@ class ThirdScreenFragment : Fragment() {
             adapterCastom.interestsList = it
         }
         setupClickListener()
+
+        button = view.findViewById(R.id.nextButton)
+
+        button?.setOnClickListener {
+            viewModel.setData {
+                openFourthFragment()
+            }
+        }
+    }
+    private fun openFourthFragment() {
+        val fragment = FourthScreenFragment.instance()
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun setupRV(view: View) {
@@ -61,14 +82,13 @@ class ThirdScreenFragment : Fragment() {
 
         recyclerView?.let {
             with(it) {
-                val layoutManager = LinearLayoutManager(view.context)
+                val layoutManager = GridLayoutManager(view.context,3)
                 this.layoutManager = layoutManager
                 adapter = adapterCastom
                 recycledViewPool.setMaxRecycledViews(ListInterestsAdapter.ENABLED_VIEW, 15)
                 recycledViewPool.setMaxRecycledViews(ListInterestsAdapter.DISABLED_VIEW, 15)
             }
         }
-
     }
 
     private fun setupClickListener() {
@@ -82,4 +102,6 @@ class ThirdScreenFragment : Fragment() {
             return ThirdScreenFragment()
         }
     }
+
+
 }

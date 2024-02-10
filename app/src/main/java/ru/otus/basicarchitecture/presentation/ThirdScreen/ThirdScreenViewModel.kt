@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import ru.otus.basicarchitecture.domain.Model.Interests
 import ru.otus.basicarchitecture.domain.getData.GetListInterests
 import ru.otus.basicarchitecture.domain.setData.SetInterestsPersonUseCase
+import java.util.TreeSet
 import javax.inject.Inject
 
 class ThirdScreenViewModel @Inject constructor(
@@ -15,7 +16,9 @@ class ThirdScreenViewModel @Inject constructor(
 
     private val saveInterests = mutableListOf<ModelInterestsForView>()
 
-    private val mutableListAllInterests: MutableList<ModelInterestsForView>
+    private val mutableListAllInterests = sortedSetOf<ModelInterestsForView>(
+        { o1, o2 -> o1.id.compareTo(o2.id) }
+    )
     private val _listInterestsLD = MutableLiveData<List<ModelInterestsForView>>()
 
     val listInterestsLD: LiveData<List<ModelInterestsForView>> = _listInterestsLD
@@ -23,37 +26,38 @@ class ThirdScreenViewModel @Inject constructor(
     //todo: разберем наверное чтение с визарда, что бы при переходе экрана туда - сюда , значения не пропадали
     init {
         val aa = getListInterests.getList()
-        mutableListAllInterests =
-            aa.mapIndexed{
-                    index, s -> ModelInterestsForView(index,s,false)
-            }.toMutableList()
-        _listInterestsLD.postValue(mutableListAllInterests)
-    }
-
-    private fun updateListSaveInterests(model: ModelInterestsForView){
-        if(model.enabled) saveInterests.add(model) else saveInterests.remove(model)
-    }
-
-
-/*    private fun setupState(){
-        saveInterests.forEach{
-            mutableListAllInterests[it.id].enabled = it.enabled
+        for (a in aa.indices) {
+            val model = ModelInterestsForView(a, aa[a], false)
+            mutableListAllInterests.add(model)
         }
-    }*/
-
-    fun setData( openFragment: () -> Unit){
-        setInterestsPersonUseCase.setInterests(Interests(saveInterests.toString()))
+        _listInterestsLD.postValue(mutableListAllInterests.toList())
     }
 
-    fun changeEnabledState(model: ModelInterestsForView){
-        val newEnabledState = !model.enabled
-        mutableListAllInterests[model.id].enabled = newEnabledState
-        updateListSaveInterests(mutableListAllInterests[model.id])
+//    private fun updateListSaveInterests(model: ModelInterestsForView){
+//        if(model.enabled) saveInterests.add(model) else saveInterests.remove(model)
+//    }
+
+    fun setData(openFragment: () -> Unit){
+        setInterestsPersonUseCase.setInterests(
+            Interests(saveInterests.joinToString())
+        )
+        openFragment.invoke()
+    }
+
+    fun changeEnabledState(model: ModelInterestsForView) {
+        val newModel = model.copy(enabled = !model.enabled)
+        mutableListAllInterests.remove(model)
+        mutableListAllInterests.add(newModel)
+        if(newModel.enabled){
+            saveInterests.add(newModel)
+        }else{
+            saveInterests.remove(newModel)
+        }
         updateList()
     }
 
-    private fun updateList(){
-        _listInterestsLD.postValue(mutableListAllInterests)
+    private fun updateList() {
+        _listInterestsLD.postValue(mutableListAllInterests.toList())
     }
 
 }
