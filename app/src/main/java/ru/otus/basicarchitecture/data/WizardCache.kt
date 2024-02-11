@@ -6,8 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
-
-
 interface PersonalInformation {
     val personalInfo: StateFlow<PersonalInformationData>
     fun setName(name: String)
@@ -17,8 +15,6 @@ interface PersonalInformation {
 
 interface AddressInformation {
     val addressInfo: StateFlow<AddressInformationData>
-    fun setCountry(country: String)
-    fun setCity(city: String)
     fun setAddress(address: String)
 }
 
@@ -58,14 +54,6 @@ class WizardCache @Inject constructor(
         _personalInfo.value = _personalInfo.value.copy(dateOfBirth = dateOfBirth)
     }
 
-    override fun setCountry(country: String) {
-        _addressInfo.value = _addressInfo.value.copy(country = country)
-    }
-
-    override fun setCity(city: String) {
-        _addressInfo.value = _addressInfo.value.copy(city = city)
-    }
-
     override fun setAddress(address: String) {
         _addressInfo.value = _addressInfo.value.copy(address = address)
     }
@@ -78,5 +66,5 @@ class WizardCache @Inject constructor(
 }
 
 data class PersonalInformationData(val name: String = "", val surname: String = "", val dateOfBirth: String = "")
-data class AddressInformationData(val country: String = "", val city: String = "", val address: String = "")
+data class AddressInformationData(val address: String = "")
 data class InterestsInformationData(val selectedInterest: MutableList<String> = mutableListOf())

@@ -1,7 +1,7 @@
 package ru.otus.basicarchitecture.address_info
 
 import android.os.Bundle
-import android.util.Log
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +27,12 @@ class AddressInfoFragment : Fragment() {
 
     private val viewModel: AddressInfoViewModel by viewModels()
 
+    private val adapter = AddressAdapter {
+        viewModel.setAddress(it)
+    }
+
+    private lateinit var textWatcher: TextWatcher
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,33 +49,26 @@ class AddressInfoFragment : Fragment() {
                 findNavController().navigate(R.id.action_addressInfoFragment_to_interestsFragment)
             }
 
+            textWatcher = addressInfoAddress.addTextChangedListener {
+                viewModel.searchAddress(it.toString())
+            }
+
             viewLifecycleOwner.lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.viewState.collect {
-                        addressInfoCountry.setTextKeepState(it.country)
-                        addressInfoCity.setTextKeepState(it.city)
-                        addressInfoAddress.setTextKeepState(it.address)
 
-                        buttonMoveToFragmentInterest.isEnabled = it.isValidCountry && it.isValidCity && it.isValidAddress
+                        addressInfoAddress.removeTextChangedListener(textWatcher)
+                        addressInfoAddress.setTextKeepState(it.address)
+                        addressInfoAddress.addTextChangedListener(textWatcher)
+
+                        adapter.submitList(it.addressList)
+
+                        buttonMoveToFragmentInterest.isEnabled = it.address.isNotEmpty()
                     }
                 }
             }
 
-            addressInfoCountry.setTextKeepState(viewModel.viewState.value.country)
-            addressInfoCity.setTextKeepState(viewModel.viewState.value.city)
-            addressInfoAddress.setTextKeepState(viewModel.viewState.value.address)
-
-            addressInfoCountry.addTextChangedListener {
-                viewModel.setCountry(it.toString())
-            }
-
-            addressInfoCity.addTextChangedListener {
-                viewModel.setCity(it.toString())
-            }
-
-            addressInfoAddress.addTextChangedListener {
-                viewModel.setAddress(it.toString())
-            }
+            recyclerAddress.adapter = adapter
         }
     }
 

@@ -13,11 +13,7 @@ import javax.inject.Inject
 class SummaryViewModel @Inject constructor(
     private val cache: WizardCache
 ) : ViewModel() {
-    private val addressInfoState: StateFlow<AddressInformationData> = cache.addressInfo
+    val addressInfoState: StateFlow<AddressInformationData> = cache.addressInfo
     val personalInfoState: StateFlow<PersonalInformationData> = cache.personalInfo
     val interestInformation: StateFlow<InterestsInformationData> = cache.interestInformation
-
-    fun getCommonAddress(): String{
-        return "${addressInfoState.value.country}, ${addressInfoState.value.city} , ${addressInfoState.value.address}"
-    }
 }

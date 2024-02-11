@@ -1,7 +1,6 @@
 package ru.otus.basicarchitecture.summary
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import ru.otus.basicarchitecture.R
-import ru.otus.basicarchitecture.address_info.AddressInfoViewModel
 import ru.otus.basicarchitecture.databinding.FragmentSummaryBinding
-import ru.otus.basicarchitecture.interests.InterestsViewModel
-import ru.otus.basicarchitecture.personal_info.PersonalInfoViewModel
 
 @AndroidEntryPoint
 class SummaryFragment : Fragment() {
@@ -50,7 +45,7 @@ class SummaryFragment : Fragment() {
                     textViewSurname.text = viewModel.personalInfoState.value.surname
                     textViewBirthDate.text = viewModel.personalInfoState.value.dateOfBirth
 
-                    textViewAddress.text = viewModel.getCommonAddress()
+                    textViewAddress.text = viewModel.addressInfoState.value.address
 
                     viewModel.interestInformation.value.selectedInterest.forEach {
                         Chip(context).apply {
