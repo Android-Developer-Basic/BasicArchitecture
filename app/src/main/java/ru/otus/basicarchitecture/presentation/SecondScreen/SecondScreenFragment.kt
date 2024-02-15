@@ -1,23 +1,16 @@
 package ru.otus.basicarchitecture.presentation.SecondScreen
 
-import android.content.Context
 import android.os.Bundle
-import android.os.Message
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
 import ru.otus.basicarchitecture.App
 import ru.otus.basicarchitecture.R
-import ru.otus.basicarchitecture.presentation.FirstScreen.FirstScreenFragment
-import ru.otus.basicarchitecture.presentation.FirstScreen.FirstScreenViewModel
 import ru.otus.basicarchitecture.presentation.ThirdScreen.ThirdScreenFragment
 import ru.otus.basicarchitecture.presentation.ViewModelFactory
 import javax.inject.Inject
@@ -31,7 +24,6 @@ class SecondScreenFragment : Fragment() {
     }
 
 
-
     private var countryEditText: EditText? = null
     private var cityEditText: EditText? = null
     private var addressEditText: EditText? = null
@@ -42,7 +34,6 @@ class SecondScreenFragment : Fragment() {
     private var addressInputLayout: TextInputLayout? = null
 
     private var nextButton: Button? = null
-
 
 
     override fun onCreateView(
@@ -62,7 +53,7 @@ class SecondScreenFragment : Fragment() {
         setupView(view)
     }
 
-    private fun setupView(view: View){
+    private fun setupView(view: View) {
         with(view) {
             nextButton = findViewById(R.id.nextButton)
 
@@ -78,9 +69,9 @@ class SecondScreenFragment : Fragment() {
 
         }
 
-        nextButton?.let{ button ->
+        nextButton?.let { button ->
             setListeners()
-            viewModel.enabledButtonLiveData.observe(viewLifecycleOwner){
+            viewModel.enabledButtonLiveData.observe(viewLifecycleOwner) {
                 button.isEnabled = it
             }
         }
@@ -93,6 +84,8 @@ class SecondScreenFragment : Fragment() {
         addressEditText?.apply {
             hint = context.getString(R.string.address)
         }
+
+        setFocusListener()
     }
 
     private fun setListeners() {
@@ -100,18 +93,13 @@ class SecondScreenFragment : Fragment() {
             viewModel.setData(
                 countryEditText?.text.toString(),
                 cityEditText?.text.toString(),
-                addressEditText?.text.toString(),
-                {showToast(MESSAGE_TOAST_INVALIDATE_TEXT, it.context)},
-                {openFragment()}
-            )
+                addressEditText?.text.toString()
+            ) { openFragment() }
         }
     }
 
-    private fun showToast(message: String, context: Context){
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
 
-    private fun openFragment(){
+    private fun openFragment() {
         val fragment = ThirdScreenFragment.instance()
         parentFragmentManager
             .beginTransaction()
@@ -120,9 +108,18 @@ class SecondScreenFragment : Fragment() {
             .commit()
     }
 
-    companion object{
-        private val MESSAGE_TOAST_INVALIDATE_TEXT = "есть незаполненные поля"
-        fun instance():SecondScreenFragment{
+    private fun setFocusListener() {
+        val lossFocus = View.OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) viewModel.buttonEnabled()
+        }
+        countryEditText?.onFocusChangeListener = lossFocus
+        cityEditText?.onFocusChangeListener = lossFocus
+        addressEditText?.onFocusChangeListener = lossFocus
+    }
+
+    companion object {
+
+        fun instance(): SecondScreenFragment {
             return SecondScreenFragment()
         }
     }

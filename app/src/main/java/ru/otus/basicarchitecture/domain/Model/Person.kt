@@ -8,7 +8,7 @@ data class Person(
     var firstName: String,
     var surName: String,
     var dateOfBirth: String
-) {
+) : DomainModel {
     companion object {
         const val defaultValueProperty = ""
 

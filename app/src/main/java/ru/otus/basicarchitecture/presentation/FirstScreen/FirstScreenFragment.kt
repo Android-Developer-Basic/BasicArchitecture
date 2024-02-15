@@ -68,6 +68,7 @@ class FirstScreenFragment : Fragment() {
 
         setupView(view)
 
+
     }
 
 
@@ -114,11 +115,14 @@ class FirstScreenFragment : Fragment() {
             onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
                 if (hasFocus) {
                     showDatePicker(view.context)
+                }else{
+                    viewModel.validateEmptyValue()
                 }
                 this.clearFocus()
             }
 
         }
+        setFocusListener()
 
 
     }
@@ -129,11 +133,20 @@ class FirstScreenFragment : Fragment() {
             viewModel.setData(
                 nameEditText?.text.toString(),
                 surNameEditText?.text.toString(),
-                birthDateEditText?.text.toString(),
-                { showToast(MESSAGE_TOAST_INVALIDATE_TEXT, it.context) },
-                { openSecondFragment() }
-            )
+                birthDateEditText?.text.toString()
+            ) { openSecondFragment() }
         }
+    }
+
+    private fun setFocusListener(){
+        val lossFocus = View.OnFocusChangeListener{_,hasFocus ->
+            if(!hasFocus){
+                viewModel.validateEmptyValue()
+            }
+        }
+        nameEditText?.onFocusChangeListener =  lossFocus
+        surNameEditText?.onFocusChangeListener = lossFocus
+
     }
 
     private fun openSecondFragment() {
@@ -174,7 +187,6 @@ class FirstScreenFragment : Fragment() {
 
 
     companion object {
-        private const val MESSAGE_TOAST_INVALIDATE_TEXT = "Есть незаполненные поля"
         private const val MESSAGE_TOAST_INCORRECT_AGE ="Возраст пользователя не может быть меньше 18"
 
 

@@ -2,6 +2,7 @@ package ru.otus.basicarchitecture.DI.MainComponent
 
 import dagger.Component
 import ru.otus.basicarchitecture.DI.FragmentComponents.FirstScreen.FirstScreenSubComponent
+import ru.otus.basicarchitecture.DI.FragmentComponents.FourthScreen.FourthScreenSubComponent
 import ru.otus.basicarchitecture.DI.FragmentComponents.SecondScreen.SecondScreenSubComponent
 import ru.otus.basicarchitecture.DI.FragmentComponents.ThirdScreen.ThirdScreenSubComponent
 import ru.otus.basicarchitecture.data.WizardCache
@@ -16,6 +17,8 @@ interface MainComponent {
     fun secondScreenSubComponent() : SecondScreenSubComponent.Builder
 
     fun thirdScreenSubComponent() : ThirdScreenSubComponent.Builder
+
+    fun fourthScreenSubComponent(): FourthScreenSubComponent.Builder
 
     fun wizardCache(): WizardCache
 

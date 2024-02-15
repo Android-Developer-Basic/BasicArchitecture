@@ -13,8 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if(savedInstanceState == null ){
-           // val fragment = FirstScreenFragment.instance()
-            val fragment = ThirdScreenFragment.instance()
+            val fragment = FirstScreenFragment.instance()
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragmentContainer, fragment)

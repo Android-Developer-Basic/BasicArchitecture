@@ -3,6 +3,7 @@ package ru.otus.basicarchitecture.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.otus.basicarchitecture.domain.Model.Address
+import ru.otus.basicarchitecture.domain.Model.DomainModel
 import ru.otus.basicarchitecture.domain.Model.Interests
 import ru.otus.basicarchitecture.domain.Model.Person
 import ru.otus.basicarchitecture.domain.Repository
@@ -76,8 +77,29 @@ class RepositoryImpl @Inject constructor(
         updateWizardCache()
     }
 
-    override fun getInfoPersonUseCase() {
-        TODO()
+    override fun getInfoPersonUseCase(): Map<String, DomainModel> {
+        val person = Person(
+            wizardCache.firstName,
+            wizardCache.surName,
+            wizardCache.dateOfBirth
+        )
+
+        val address = Address(
+            wizardCache.country,
+            wizardCache.city,
+            wizardCache.address
+        )
+
+        val interests = Interests(
+            wizardCache.interests
+        )
+
+
+        return mapOf(
+            "person" to person,
+            "address" to address,
+            "interests" to interests
+        )
     }
 
     override fun getListInterests(): List<String>  = listInterests

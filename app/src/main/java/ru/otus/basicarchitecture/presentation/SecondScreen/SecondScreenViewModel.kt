@@ -18,25 +18,26 @@ class SecondScreenViewModel @Inject constructor (
     private var city: String = UNKNOWN_VALUE
     private var address: String = UNKNOWN_VALUE
 
+    //по хорошему подтягивать бы данные из визард кэша
     init {
         enabledButtonMutableLiveData.postValue(true)
     }
 
-    fun setData(country: String?, city: String?, address: String?, showToast: () -> Unit, openFragment: () -> Unit){
+    fun setData(country: String?, city: String?, address: String?,  openFragment: () -> Unit){
         this.country = country ?: UNKNOWN_VALUE
         this.city = city ?: UNKNOWN_VALUE
         this.address = address ?: UNKNOWN_VALUE
-        if(validateEmptyValue(showToast)) {
+        if(validateEmptyValue(this.country, this.city , this.address)) {
             val addres = Address(this.country, this.city, this.address)
             setAddressUseCase.setAddress(addres)
             openFragment.invoke()
         }
     }
 
-
-    fun validateEmptyValue(showToast: () -> Unit): Boolean {
+    //убрать костыль с параметрами
+    fun validateEmptyValue(country: String, city: String, address: String): Boolean {
         return if (country == UNKNOWN_VALUE || city == UNKNOWN_VALUE || address == UNKNOWN_VALUE) {
-            setupFalseButton(showToast)
+            enabledButtonMutableLiveData.postValue(false)
             false
         } else {
             enabledButtonMutableLiveData.postValue(true)
@@ -44,10 +45,11 @@ class SecondScreenViewModel @Inject constructor (
         }
     }
 
-    private fun setupFalseButton(showToast: () -> Unit) {
-        enabledButtonMutableLiveData.postValue(false)
-        showToast.invoke()
+    fun buttonEnabled(){
+        enabledButtonMutableLiveData.postValue(true)
     }
+
+
 
 
     companion object{

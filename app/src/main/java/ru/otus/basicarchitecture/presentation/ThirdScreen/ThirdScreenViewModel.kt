@@ -38,8 +38,13 @@ class ThirdScreenViewModel @Inject constructor(
 //    }
 
     fun setData(openFragment: () -> Unit){
+
+        val list = mutableListOf<String>()
+        saveInterests.forEach {
+            list.add(it.interests)
+        }
         setInterestsPersonUseCase.setInterests(
-            Interests(saveInterests.joinToString())
+            Interests(list.joinToString())
         )
         openFragment.invoke()
     }

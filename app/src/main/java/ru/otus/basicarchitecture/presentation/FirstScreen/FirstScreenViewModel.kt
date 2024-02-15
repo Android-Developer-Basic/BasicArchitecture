@@ -22,23 +22,23 @@ class FirstScreenViewModel @Inject constructor(
 
 
     init {
-        enabledButtonMutableLiveData.postValue(true)
+        enabledButtonMutableLiveData.postValue(false)
     }
 
-    fun setData(name: String?, surName: String?, birthDate: String?, showToast: () -> Unit, openFragment: () -> Unit) {
+    fun setData(name: String?, surName: String?, birthDate: String?, openFragment: () -> Unit) {
         this.name = name ?: UNKNOWN_VALUE
         this.surName = surName ?: UNKNOWN_VALUE
         this.birthDate = birthDate ?: UNKNOWN_VALUE
-        if(validateEmptyValue(showToast)){
+        if(validateEmptyValue()){
             val person = Person(this.name, this.surName, this.birthDate)
             setPersonUseCase.setPerson(person)
             openFragment.invoke()
         }
     }
 
-    fun validateEmptyValue(showToast: () -> Unit): Boolean {
+    fun validateEmptyValue(): Boolean {
         return if (name == UNKNOWN_VALUE || surName == UNKNOWN_VALUE || birthDate == UNKNOWN_VALUE) {
-            setupFalseButton(showToast)
+            enabledButtonMutableLiveData.postValue(false)
             false
         } else {
             enabledButtonMutableLiveData.postValue(true)
@@ -63,6 +63,10 @@ class FirstScreenViewModel @Inject constructor(
     private fun setupFalseButton(showToast: () -> Unit) {
         enabledButtonMutableLiveData.postValue(false)
         showToast.invoke()
+    }
+
+    fun enabledButton(){
+        enabledButtonMutableLiveData.postValue(true)
     }
 
 
