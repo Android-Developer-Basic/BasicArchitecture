@@ -15,8 +15,10 @@ class InterestsAdapter: RecyclerView.Adapter<InterestsViewHolder>() {
 
     var interestsList = listOf<ModelInterestsForView>()
         set(value){
+            val callback = InterestsDiffUtil(interestsList, value)
+            val diffResult = DiffUtil.calculateDiff(callback)
+            diffResult.dispatchUpdatesTo(this)
             field = value
-            notifyDataSetChanged()
         }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InterestsViewHolder {
 
