@@ -12,14 +12,14 @@ class Fragment4ViewModel @Inject constructor(
     info: PersonUseCase
 ) : ViewModel() {
 
-    val modelFourthScreen: Fragment4Model
+    val fragment4Model: Fragment4Model
 
     init {
         val information = info.getPerson()
         val person = information["person"] as Person
         val address = information["address"] as Address
         val interest = information["interests"] as Interests
-        modelFourthScreen = Fragment4Model(
+        fragment4Model = Fragment4Model(
             person.firstName,
             person.surName,
             person.dateOfBirth,

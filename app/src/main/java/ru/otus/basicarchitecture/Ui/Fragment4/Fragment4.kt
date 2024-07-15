@@ -50,11 +50,11 @@ class Fragment4: Fragment() {
     }
 
     private fun setupView(){
-        binding.Name.text = viewModel.modelFourthScreen.name
-        binding.Surname.text = viewModel.modelFourthScreen.surName
-        binding.DateOfBirth.text = viewModel.modelFourthScreen.birthDate
-        binding.Address.text = viewModel.modelFourthScreen.fullAddress
-        adapter.listInterestsInfo = viewModel.modelFourthScreen.interests
+        binding.Name.text = viewModel.fragment4Model.name
+        binding.Surname.text = viewModel.fragment4Model.surName
+        binding.DateOfBirth.text = viewModel.fragment4Model.birthDate
+        binding.Address.text = viewModel.fragment4Model.fullAddress
+        adapter.listInterestsInfo = viewModel.fragment4Model.interests
 
         val spanCount = 2
         val orientation = StaggeredGridLayoutManager.VERTICAL

@@ -15,9 +15,9 @@ class Fragment1ViewModel @Inject constructor(
     private val enabledButtonMutableLiveData = MutableLiveData<Boolean>()
     val enabledButtonLiveData = enabledButtonMutableLiveData
 
-    private var name = UNKNOWN_VALUE
-    private var surName = UNKNOWN_VALUE
-    private var birthDate = UNKNOWN_VALUE
+    private var name = DEFFAULT_VALUE
+    private var surName = DEFFAULT_VALUE
+    private var birthDate = DEFFAULT_VALUE
 
 
     init {
@@ -25,9 +25,9 @@ class Fragment1ViewModel @Inject constructor(
     }
 
     fun setData(name: String?, surName: String?, birthDate: String?, openFragment: () -> Unit) {
-        this.name = name ?: UNKNOWN_VALUE
-        this.surName = surName ?: UNKNOWN_VALUE
-        this.birthDate = birthDate ?: UNKNOWN_VALUE
+        this.name = name ?: DEFFAULT_VALUE
+        this.surName = surName ?: DEFFAULT_VALUE
+        this.birthDate = birthDate ?: DEFFAULT_VALUE
         if(validateEmptyValue()){
             val person = Person(this.name, this.surName, this.birthDate)
             personUseCase.setPerson(person)
@@ -36,7 +36,7 @@ class Fragment1ViewModel @Inject constructor(
     }
 
     fun validateEmptyValue(): Boolean {
-        return if (name == UNKNOWN_VALUE || surName == UNKNOWN_VALUE || birthDate == UNKNOWN_VALUE) {
+        return if (name.isEmpty() || surName.isEmpty() || birthDate.isEmpty()) {
             enabledButtonMutableLiveData.postValue(false)
             false
         } else {
@@ -70,6 +70,6 @@ class Fragment1ViewModel @Inject constructor(
 
 
     companion object {
-        private val UNKNOWN_VALUE = ""
+        private val DEFFAULT_VALUE = ""
     }
 }
