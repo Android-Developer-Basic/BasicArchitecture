@@ -9,6 +9,6 @@ class AddressModule {
     @FragmentScope
     @Provides
     fun providesAddress(): Address {
-        return Address("","","")
+        return Address("")
     }
 }

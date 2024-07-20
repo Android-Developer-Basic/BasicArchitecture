@@ -8,7 +8,6 @@ import ru.otus.basicarchitecture.Ui.Fragment1.Fragment2ViewModel
 
 @Module
 interface Fragment2ViewModelModule {
-
     @IntoMap
     @StringKey("Fragment2ViewModel")
     @Binds

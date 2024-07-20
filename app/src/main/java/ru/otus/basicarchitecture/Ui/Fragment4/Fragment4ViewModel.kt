@@ -23,7 +23,7 @@ class Fragment4ViewModel @Inject constructor(
             person.firstName,
             person.surName,
             person.dateOfBirth,
-            "${address.country}, ${address.city}, ${address.city}",
+            address.address,
             interest.interests.split(",")
         )
     }

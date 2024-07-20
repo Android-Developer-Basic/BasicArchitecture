@@ -1,9 +1,11 @@
 package ru.otus.basicarchitecture.Ui.Fragment1
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.otus.basicarchitecture.App
@@ -53,6 +55,13 @@ class Fragment2: Fragment() {
             }
         }
 
+        binding.addressEditText.doAfterTextChanged {
+            viewModel.loadSuggestions(input = it?.toString() ?: "")
+        }
+
+        viewModel.suggestionsLiveData.observe(viewLifecycleOwner) {
+            Log.d("Server", "Size=" + it.size.toString())
+        }
 
         setFocusListener()
     }
@@ -60,8 +69,6 @@ class Fragment2: Fragment() {
     private fun setListeners() {
         binding.nextButton.setOnClickListener {
             viewModel.setData(
-                binding.countryEditText.text.toString(),
-                binding.cityEditText.text.toString(),
                 binding.addressEditText.text.toString()
             ) { openFragment() }
         }
@@ -81,8 +88,7 @@ class Fragment2: Fragment() {
         val lossFocus = View.OnFocusChangeListener { _, hasFocus ->
             if (hasFocus) viewModel.buttonEnabled()
         }
-        binding.countryEditText.onFocusChangeListener = lossFocus
-        binding.cityEditText.onFocusChangeListener = lossFocus
+
         binding.addressEditText.onFocusChangeListener = lossFocus
     }
 }

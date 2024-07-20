@@ -50,8 +50,6 @@ class RepositoryImpl @Inject constructor(
     }
 
     override fun setAddress(address: Address) {
-        wizardCache.city = address.city
-        wizardCache.country = address.country
         wizardCache.address = address.address
         updateWizardCache()
     }
@@ -75,8 +73,6 @@ class RepositoryImpl @Inject constructor(
         )
 
         val address = Address(
-            wizardCache.country,
-            wizardCache.city,
             wizardCache.address
         )
 

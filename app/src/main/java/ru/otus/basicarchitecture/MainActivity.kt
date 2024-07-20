@@ -3,6 +3,7 @@ package ru.otus.basicarchitecture
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ru.otus.basicarchitecture.Ui.Fragment1.Fragment1
+import ru.otus.basicarchitecture.Ui.Fragment1.Fragment2
 import ru.otus.basicarchitecture.Ui.Fragment3.Fragment3
 
 class MainActivity : AppCompatActivity() {
@@ -11,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if(savedInstanceState == null ){
-            val fragment = Fragment1()
+            val fragment = Fragment2()
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragmentContainer, fragment)

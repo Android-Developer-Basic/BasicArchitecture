@@ -12,8 +12,6 @@ data class WizardCache(
     var dateOfBirth: String,
 
     //address
-    var country: String,
-    var city: String,
     var address: String,
 
     //interests
