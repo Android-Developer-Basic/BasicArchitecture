@@ -1,5 +1,8 @@
 package ru.otus.basicarchitecture.Ui.Fragment1
 
+import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,15 +16,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.otus.basicarchitecture.Core.Model.DTO.Suggestion
 import ru.otus.basicarchitecture.Core.Model.DTO.SuggestionRequest
+import ru.otus.basicarchitecture.Core.Utils.ErrorService
+import ru.otus.basicarchitecture.Core.Utils.ProgresService
 import ru.otus.basicarchitecture.data.AddressImpl
 import javax.inject.Inject
 
 class Fragment2ViewModel  @Inject constructor (
     private val addressUseCase: AddressUseCase,
-    private val repository: AddressImpl
+    private val repository: AddressImpl,
+    private val progresService: ProgresService,
+    private val errorService: ErrorService
 ) : ViewModel() {
 
-
+    private var prevQuery = ""
     private val enabledButtonMutableLiveData = MutableLiveData<Boolean>()
     val enabledButtonLiveData = enabledButtonMutableLiveData
 
@@ -35,9 +42,6 @@ class Fragment2ViewModel  @Inject constructor (
     private var address: String = UNKNOWN_VALUE
 
     private var loadingSuggestionsTask: Job = Job()
-    private val mSuggestionsGroupState =
-        MutableLiveData<SuggestionsGroupState>(SuggestionsGroupState.NotSet)
-    val suggestionsGroupState: LiveData<SuggestionsGroupState> get() = mSuggestionsGroupState
 
 
     init {
@@ -68,32 +72,35 @@ class Fragment2ViewModel  @Inject constructor (
     }
 
 
-    fun loadSuggestions(input: String) {
+    fun loadSuggestions(context: Context, input: String) {
+        if (input == prevQuery) {
+            return
+        }
+        prevQuery = input
+
         loadingSuggestionsTask.cancel()
+        progresService.showLoadingDialog(context)
         loadingSuggestionsTask = viewModelScope.launch {
-            mSuggestionsGroupState.value = SuggestionsGroupState.Loading
             try {
                 withContext(Dispatchers.IO) { repository.getSuggestions(input) }
                     .takeIf { it.isSuccess }
                     ?.let {
+                        progresService.hideLoading()
                         mSuggestionsMutableLiveData.value =
                             it.getOrNull()
                                 ?.suggestions
                                 ?.filter { s -> s.value != input }
                                 ?.mapNotNull { s -> s.value?.let { v -> Suggestion(v) } }
                                 ?: emptyList()
-                        mSuggestionsGroupState.value = SuggestionsGroupState.Content
                     } ?: let {
-                    mSuggestionsGroupState.value = SuggestionsGroupState.Error
+                    progresService.hideLoading()
+                    errorService.show("Ошибка загрузки", context)
                 }
             } catch (t: Throwable) {
-                mSuggestionsGroupState.value = SuggestionsGroupState.Error
+                progresService.hideLoading()
+
             }
         }
-    }
-
-    enum class SuggestionsGroupState {
-        NotSet, Loading, Content, Error
     }
 
 }

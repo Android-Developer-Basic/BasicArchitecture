@@ -11,6 +11,6 @@ interface Fragment2ViewModelModule {
     @IntoMap
     @StringKey("Fragment2ViewModel")
     @Binds
-    fun bindFirstScreenViewModel(impl: Fragment2ViewModel): ViewModel
+    fun bindSecondScreenViewModel(impl: Fragment2ViewModel): ViewModel
 
 }

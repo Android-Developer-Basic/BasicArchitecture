@@ -19,17 +19,24 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/address_layout"
+                android:id="@+id/addressFieldLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:hint="@string/address">
+                android:layout_height="wrap_content"
+                android:hint="Address"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingTop="16dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="8dp"
+                android:paddingStart="15dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/addressEditText"
+                    android:id="@+id/addressField"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPostalAddress" />
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"/>
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.recyclerview.widget.RecyclerView

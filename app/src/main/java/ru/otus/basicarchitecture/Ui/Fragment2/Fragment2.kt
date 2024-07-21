@@ -9,8 +9,12 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.otus.basicarchitecture.App
+import ru.otus.basicarchitecture.Core.Model.DTO.Suggestion
 import ru.otus.basicarchitecture.Core.Model.ViewModelFactory
+import ru.otus.basicarchitecture.Core.Utils.toEditable
 import ru.otus.basicarchitecture.R
+import ru.otus.basicarchitecture.Ui.Fragment2.Fragment2Adapter
+import ru.otus.basicarchitecture.Ui.Fragment2.OnItemClickListener
 import ru.otus.basicarchitecture.Ui.Fragment3.Fragment3
 import ru.otus.basicarchitecture.databinding.Fragment2Binding
 import javax.inject.Inject
@@ -19,6 +23,7 @@ class Fragment2: Fragment() {
     private lateinit var binding: Fragment2Binding
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    lateinit var adapter: Fragment2Adapter
 
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[Fragment2ViewModel::class.java]
@@ -55,21 +60,35 @@ class Fragment2: Fragment() {
             }
         }
 
-        binding.addressEditText.doAfterTextChanged {
-            viewModel.loadSuggestions(input = it?.toString() ?: "")
+
+        binding.addressField.doAfterTextChanged {
+            val context = requireContext()
+            viewModel.loadSuggestions(input = it.toString(), context = context)
+
         }
 
         viewModel.suggestionsLiveData.observe(viewLifecycleOwner) {
             Log.d("Server", "Size=" + it.size.toString())
+            adapter.addList(it)
         }
 
+        configureRecycler()
         setFocusListener()
+    }
+
+    fun configureRecycler() {
+        adapter = Fragment2Adapter(listener = object : OnItemClickListener {
+            override fun onItemClick(item: Suggestion?) {
+                binding.addressField.text = item?.value?.toEditable()
+            }
+        })
+        binding.recyclerAddress.adapter = adapter
     }
 
     private fun setListeners() {
         binding.nextButton.setOnClickListener {
             viewModel.setData(
-                binding.addressEditText.text.toString()
+                binding.addressField.text.toString()
             ) { openFragment() }
         }
     }
@@ -89,6 +108,6 @@ class Fragment2: Fragment() {
             if (hasFocus) viewModel.buttonEnabled()
         }
 
-        binding.addressEditText.onFocusChangeListener = lossFocus
+        binding.addressField.onFocusChangeListener = lossFocus
     }
 }

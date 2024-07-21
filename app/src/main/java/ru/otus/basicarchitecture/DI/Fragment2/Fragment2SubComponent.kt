@@ -6,7 +6,7 @@ import ru.otus.basicarchitecture.DI.FragmentScope
 import ru.otus.basicarchitecture.Ui.Fragment1.Fragment2
 
 @FragmentScope
-@Subcomponent(modules = [PersonModule::class, Fragment2ViewModelModule::class])
+@Subcomponent(modules = [AddressModule::class, Fragment2ViewModelModule::class])
 interface Fragment2SubComponent {
     @Subcomponent.Builder
     interface Builder {
