@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">BasicArchitecture</string>
+    <string name="next">Next</string>
+    <string name="name">Name</string>
+    <string name="DateOfBirthHint">Date of Birth</string>
+    <string name="surname">Surname</string>
+    <string name="date">Date</string>
+    <string name="country">country</string>
+    <string name="city">city</string>
+    <string name="address">Address</string>
+    <string name="dadata_api_key"></string>
 </resources>
