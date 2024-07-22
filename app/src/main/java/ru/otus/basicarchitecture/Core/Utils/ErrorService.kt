@@ -5,25 +5,22 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.text.SpannableString
+import android.widget.Toast
 import ru.otus.basicarchitecture.R
 import javax.inject.Inject
 
 class ErrorService @Inject constructor() {
-    private var alert: AlertDialog? = null
-    fun show(message: String, context: Context) {
+    private var context: Context? = null
+    fun show(message: String) {
         val title = "Ошибка"
-        if (alert == null) {
-            alert = AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton("OK") { dialogInterface: DialogInterface, i: Int ->
-                    dialogInterface.cancel()
-                }
-                .create()
+        if (context!= null) {
+            Toast.makeText(context,message ,Toast.LENGTH_SHORT).show();
 
-            alert?.setCancelable(false)
         }
 
-        alert?.show()
+    }
+
+    fun setContext(context: Context?) {
+        this.context = context
     }
 }

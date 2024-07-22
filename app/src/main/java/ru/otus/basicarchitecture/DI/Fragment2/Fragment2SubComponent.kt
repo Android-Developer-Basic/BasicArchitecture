@@ -1,5 +1,7 @@
 package ru.otus.basicarchitecture.DI.Fragment2
 
+import android.content.Context
+import dagger.BindsInstance
 import dagger.Subcomponent
 import ru.otus.basicarchitecture.DI.FragmentComponents.FirstScreen.PersonModule
 import ru.otus.basicarchitecture.DI.FragmentScope

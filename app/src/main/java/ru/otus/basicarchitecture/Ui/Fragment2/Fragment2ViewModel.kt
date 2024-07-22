@@ -12,6 +12,7 @@ import ru.otus.basicarchitecture.Domain.Data.AddressUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.otus.basicarchitecture.Core.Model.DTO.Suggestion
@@ -24,8 +25,8 @@ import javax.inject.Inject
 class Fragment2ViewModel  @Inject constructor (
     private val addressUseCase: AddressUseCase,
     private val repository: AddressImpl,
-    private val progresService: ProgresService,
-    private val errorService: ErrorService
+    public val progresService: ProgresService,
+    public val errorService: ErrorService
 ) : ViewModel() {
 
     private var prevQuery = ""
@@ -72,15 +73,16 @@ class Fragment2ViewModel  @Inject constructor (
     }
 
 
-    fun loadSuggestions(context: Context, input: String) {
+    fun loadSuggestions(input: String) {
         if (input == prevQuery) {
             return
         }
         prevQuery = input
 
         loadingSuggestionsTask.cancel()
-        progresService.showLoadingDialog(context)
+        progresService.showLoadingDialog()
         loadingSuggestionsTask = viewModelScope.launch {
+            delay(2000)
             try {
                 withContext(Dispatchers.IO) { repository.getSuggestions(input) }
                     .takeIf { it.isSuccess }
@@ -94,7 +96,7 @@ class Fragment2ViewModel  @Inject constructor (
                                 ?: emptyList()
                     } ?: let {
                     progresService.hideLoading()
-                    errorService.show("Ошибка загрузки", context)
+                    errorService.show("Ошибка загрузки")
 
                 }
             } catch (t: Throwable) {
