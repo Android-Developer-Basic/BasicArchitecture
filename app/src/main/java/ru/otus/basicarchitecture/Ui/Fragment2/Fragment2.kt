@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import ru.otus.basicarchitecture.App
 import ru.otus.basicarchitecture.Core.Model.DTO.Suggestion
 import ru.otus.basicarchitecture.Core.Model.ViewModelFactory
-import ru.otus.basicarchitecture.Core.Utils.ProgresService
 import ru.otus.basicarchitecture.Core.Utils.toEditable
 import ru.otus.basicarchitecture.R
 import ru.otus.basicarchitecture.Ui.Fragment2.Fragment2Adapter
@@ -25,9 +24,6 @@ class Fragment2: Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var adapter: Fragment2Adapter
-
-    @Inject
-    lateinit var progressSevice: ProgresService
 
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[Fragment2ViewModel::class.java]
@@ -55,8 +51,6 @@ class Fragment2: Fragment() {
             .inject(this)
 
         viewModel.errorService.setContext(requireContext())
-        viewModel.progresService.setContext(requireContext())
-
         setupView()
     }
 
@@ -72,12 +66,19 @@ class Fragment2: Fragment() {
         binding.addressField.doAfterTextChanged {
             val context = requireContext()
             viewModel.loadSuggestions(input = it.toString())
-"мск хаб"
         }
 
         viewModel.suggestionsLiveData.observe(viewLifecycleOwner) {
             Log.d("Server", "Size=" + it.size.toString())
             adapter.addList(it)
+        }
+
+        viewModel.showProgress.observe(viewLifecycleOwner) {
+            if(it) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
         }
 
         configureRecycler()
@@ -87,6 +88,7 @@ class Fragment2: Fragment() {
     fun configureRecycler() {
         adapter = Fragment2Adapter(listener = object : OnItemClickListener {
             override fun onItemClick(item: Suggestion?) {
+                item?.value?.let { viewModel.setQuery(it) }
                 binding.addressField.text = item?.value?.toEditable()
             }
         })

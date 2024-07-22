@@ -3,13 +3,11 @@ package ru.otus.basicarchitecture.DI.MainComponent
 import android.content.Context
 import dagger.Component
 import me.amitshekhar.mvvm.di.ApplicationContext
-import ru.otus.basicarchitecture.Core.Utils.ProgresService
 import ru.otus.basicarchitecture.DI.Fragment1.Fragment1SubComponent
 import ru.otus.basicarchitecture.DI.Fragment2.Fragment2SubComponent
 import ru.otus.basicarchitecture.DI.Fragment3.Fragment3SubComponent
 import ru.otus.basicarchitecture.DI.FragmentComponents.Fragment4.Fragment4SubComponent
 import ru.otus.basicarchitecture.Domain.Repository
-import ru.otus.basicarchitecture.MainActivity
 import ru.otus.basicarchitecture.data.NetworkService
 import ru.otus.basicarchitecture.data.WizardCache
 import javax.inject.Singleton
@@ -25,8 +23,6 @@ interface MainComponent {
     fun wizardCache(): WizardCache
 
     fun repository(): Repository
-
-    fun progresService(): ProgresService
 
     @ApplicationContext
     fun getContext(): Context

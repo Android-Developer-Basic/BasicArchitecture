@@ -1,9 +1,5 @@
 package ru.otus.basicarchitecture.Ui.Fragment1
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,21 +7,18 @@ import ru.otus.basicarchitecture.Core.Model.Address
 import ru.otus.basicarchitecture.Domain.Data.AddressUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.http.Query
 import ru.otus.basicarchitecture.Core.Model.DTO.Suggestion
-import ru.otus.basicarchitecture.Core.Model.DTO.SuggestionRequest
 import ru.otus.basicarchitecture.Core.Utils.ErrorService
-import ru.otus.basicarchitecture.Core.Utils.ProgresService
 import ru.otus.basicarchitecture.data.AddressImpl
 import javax.inject.Inject
 
 class Fragment2ViewModel  @Inject constructor (
     private val addressUseCase: AddressUseCase,
     private val repository: AddressImpl,
-    public val progresService: ProgresService,
     public val errorService: ErrorService
 ) : ViewModel() {
 
@@ -35,6 +28,9 @@ class Fragment2ViewModel  @Inject constructor (
 
     private val mSuggestionsMutableLiveData = MutableLiveData<List<Suggestion>>()
     val suggestionsLiveData = mSuggestionsMutableLiveData
+
+    private val mShowProgress = MutableLiveData<Boolean>()
+    val showProgress = mShowProgress
 
 
     private val UNKNOWN_VALUE = ""
@@ -80,14 +76,14 @@ class Fragment2ViewModel  @Inject constructor (
         prevQuery = input
 
         loadingSuggestionsTask.cancel()
-        progresService.showLoadingDialog()
+        mShowProgress.value = true
         loadingSuggestionsTask = viewModelScope.launch {
             delay(2000)
             try {
                 withContext(Dispatchers.IO) { repository.getSuggestions(input) }
                     .takeIf { it.isSuccess }
                     ?.let {
-                        progresService.hideLoading()
+                        mShowProgress.value = false
                         mSuggestionsMutableLiveData.value =
                             it.getOrNull()
                                 ?.suggestions
@@ -95,15 +91,19 @@ class Fragment2ViewModel  @Inject constructor (
                                 ?.mapNotNull { s -> s.value?.let { v -> Suggestion(v) } }
                                 ?: emptyList()
                     } ?: let {
-                    progresService.hideLoading()
+                    mShowProgress.value = false
                     errorService.show("Ошибка загрузки")
 
                 }
             } catch (t: Throwable) {
-                progresService.hideLoading()
+                mShowProgress.value = false
 
             }
         }
+    }
+
+    fun setQuery(query: String) {
+        prevQuery = query
     }
 
 }
