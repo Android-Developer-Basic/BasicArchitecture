@@ -95,6 +95,7 @@ class Fragment2ViewModel  @Inject constructor (
                     } ?: let {
                     progresService.hideLoading()
                     errorService.show("Ошибка загрузки", context)
+
                 }
             } catch (t: Throwable) {
                 progresService.hideLoading()
