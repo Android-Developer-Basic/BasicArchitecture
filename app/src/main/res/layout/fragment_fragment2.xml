@@ -7,20 +7,20 @@
     tools:context=".ui.fragments.Fragment1">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nameEditText"
+        android:id="@+id/countryEditText"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:hint="Name"
+        android:hint="Country"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/name"
+            android:id="@+id/country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -28,48 +28,48 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/surnameEditText"
+        android:id="@+id/cityEditText"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
-        android:hint="Surname"
+        android:hint="City"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameEditText">
+        app:layout_constraintTop_toBottomOf="@+id/countryEditText">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/surname"
+            android:id="@+id/city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:maxLines="1"/>
+            android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/birthdateEditText"
+        android:id="@+id/addressEditText"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
-        android:hint="Date of birth"
+        android:hint="Address"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/surnameEditText">
+        app:layout_constraintTop_toBottomOf="@+id/cityEditText">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:inputType="date"
-            android:id="@+id/birthdate"
+            android:id="@+id/address"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="date" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/fragment1Btn"
+        android:id="@+id/fragment2Btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
