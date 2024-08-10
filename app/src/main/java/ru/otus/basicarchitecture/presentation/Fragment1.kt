@@ -10,9 +10,7 @@ import ru.otus.basicarchitecture.R
 
 class Fragment1 : Fragment() {
 
-    private val viewModel: Fragment1ViewModel by viewModels()
-
-
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
