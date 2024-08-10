@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture.presentation
+package ru.otus.basicarchitecture.ui.fragments
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.otus.basicarchitecture.R
+import ru.otus.basicarchitecture.viewmodels.MainViewModel
 
 class Fragment1 : Fragment() {
 
