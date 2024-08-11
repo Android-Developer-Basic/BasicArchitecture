@@ -3,9 +3,14 @@ package ru.otus.basicarchitecture.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.otus.basicarchitecture.model.InputData
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
-    private val _state = MutableLiveData<MainViewState>()
-    val viewState: LiveData<MainViewState> = _state
+class MainViewModel @Inject constructor() : ViewModel() {
+    private val _inputData = MutableLiveData<InputData>()
+    val inputData: LiveData<InputData> get() = _inputData
 
+    fun setInputData(data: InputData) {
+        _inputData.value = data
+    }
 }

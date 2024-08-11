@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -46,8 +48,17 @@ dependencies {
 
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
+
+    // Hilt
+    implementation 'com.google.dagger:hilt-android:2.52'
+    kapt 'com.google.dagger:hilt-compiler:2.52'
+
     def lifecycle_version = "2.6.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
     implementation 'androidx.activity:activity-ktx:1.7.2'
+}
+
+kapt {
+    correctErrorTypes true
 }

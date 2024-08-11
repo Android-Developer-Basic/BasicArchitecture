@@ -1,5 +1,5 @@
 package ru.otus.basicarchitecture.viewmodels
-data class MainViewState(
+data class ViewState(
     val isProgress: Boolean = false,
     val currentWater: String = ""
 )
