@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.textfield.TextInputEditText
 import ru.otus.basicarchitecture.R
 import ru.otus.basicarchitecture.model.InputData
 import ru.otus.basicarchitecture.ui.MainActivity
@@ -22,7 +23,7 @@ class Fragment1 : Fragment() {
     private val _state = MutableLiveData<ViewState>()
     val viewState: LiveData<ViewState> = _state
 
-    private val viewModel: Fragment1ViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +36,7 @@ class Fragment1 : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_fragment1, container, false)
 
-        val editText = view.findViewById<EditText>(R.id.nameEditText)
+        val editText = view.findViewById<TextInputEditText>(R.id.name)
         val button = view.findViewById<Button>(R.id.fragment1Btn)
 
         button.setOnClickListener {
@@ -44,7 +45,7 @@ class Fragment1 : Fragment() {
 
             // Переход ко второму фрагменту
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, SecondFragment())
+                .replace(R.id.fragment_container, Fragment2())
                 .addToBackStack(null)
                 .commit()
         }
