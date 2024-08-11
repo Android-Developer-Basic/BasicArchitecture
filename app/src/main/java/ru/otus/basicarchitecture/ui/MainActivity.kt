@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
-        transaction.addToBackStack("af") // Добавляем в стек для навигации
+        transaction.addToBackStack("null") // Добавляем в стек для навигации
         transaction.commit()
     }
 }

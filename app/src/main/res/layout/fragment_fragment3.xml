@@ -5,5 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.Fragment1">
-
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/tagFlexboxLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            app:flexWrap="wrap"
+            app:justifyContent="flex_start" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
