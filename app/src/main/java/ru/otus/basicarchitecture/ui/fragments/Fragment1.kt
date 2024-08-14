@@ -53,6 +53,8 @@ class Fragment1 : Fragment() {
         nextBtn = view.findViewById(R.id.fragment1Btn)
         toast = view.findViewById(R.id.toast)
 
+        birthDateEditText.setMask("99.99.9999")
+
 
 
         nextBtn.setOnClickListener {

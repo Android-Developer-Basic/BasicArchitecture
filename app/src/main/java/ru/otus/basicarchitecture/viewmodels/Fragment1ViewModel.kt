@@ -8,6 +8,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ru.otus.basicarchitecture.model.Tag
 import ru.otus.basicarchitecture.repository.TagRepository
 import ru.otus.basicarchitecture.repository.WizardCache
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import javax.inject.Inject
 @HiltViewModel
 class Fragment1ViewModel @Inject constructor(private val wizardCache: WizardCache) : ViewModel() {
@@ -28,7 +31,16 @@ class Fragment1ViewModel @Inject constructor(private val wizardCache: WizardCach
     }
 
     private fun isAgeValid(birthDate: String?): Boolean {
-        // Логика проверки возраста (например, 18+)
-        return true // Замените на реальную логику
+        if (birthDate.isNullOrEmpty()) return false
+
+        val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        return try {
+            val date = sdf.parse(birthDate)
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.YEAR, -18)
+            date <= calendar.time
+        } catch (e: Exception) {
+            false
+        }
     }
 }

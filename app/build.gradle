@@ -57,6 +57,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
     implementation 'androidx.activity:activity-ktx:1.7.2'
+
+    implementation 'com.github.redmadrobot:inputmask:6.0.0'
 }
 
 kapt {
