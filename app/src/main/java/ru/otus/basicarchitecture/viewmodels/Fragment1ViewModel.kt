@@ -5,10 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.otus.basicarchitecture.model.Tag
 import ru.otus.basicarchitecture.repository.TagRepository
+import ru.otus.basicarchitecture.repository.WizardCache
+import javax.inject.Inject
 
-class Fragment1ViewModel : ViewModel() {
-    private fun onNextButtonClicked() {
+class Fragment1ViewModel @Inject constructor(private val wizardCache: WizardCache) : ViewModel() {
 
-
-    }
 }
