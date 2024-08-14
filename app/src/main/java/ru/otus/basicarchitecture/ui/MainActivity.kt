@@ -4,10 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.ui.fragments.Fragment1
 import ru.otus.basicarchitecture.R
 import ru.otus.basicarchitecture.viewmodels.MainViewModel
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()

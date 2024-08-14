@@ -11,6 +11,7 @@ import android.widget.EditText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.textfield.TextInputEditText
+import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.R
 import ru.otus.basicarchitecture.model.InputData
 import ru.otus.basicarchitecture.ui.MainActivity
@@ -18,41 +19,62 @@ import ru.otus.basicarchitecture.viewmodels.Fragment1ViewModel
 import ru.otus.basicarchitecture.viewmodels.MainViewModel
 import ru.otus.basicarchitecture.viewmodels.ViewState
 
+@AndroidEntryPoint
 class Fragment1 : Fragment() {
 
     private val _state = MutableLiveData<ViewState>()
     val viewState: LiveData<ViewState> = _state
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: Fragment1ViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var firstNameEditText: EditText
+    private lateinit var lastNameEditText: EditText
+    private lateinit var birthDateEditText: EditText
+    private lateinit var nextBtn: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         val view = inflater.inflate(R.layout.fragment_fragment1, container, false)
-
-        val editText = view.findViewById<TextInputEditText>(R.id.name)
-        val button = view.findViewById<Button>(R.id.fragment1Btn)
-
-        button.setOnClickListener {
-            val inputData = InputData(editText.text.toString())
-            viewModel.setInputData(inputData)
-
-            // Переход ко второму фрагменту
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, Fragment2())
-                .addToBackStack(null)
-                .commit()
-        }
         return view
     }
 
-    fun onNextButtonClicked() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        firstNameEditText = view.findViewById(R.id.name)
+        lastNameEditText = view.findViewById(R.id.surname)
+        birthDateEditText = view.findViewById(R.id.birthdate)
+        nextBtn = view.findViewById(R.id.fragment1Btn)
+
+        // Устанавливаем наблюдателей для LiveData
+        viewModel.firstName.observe(viewLifecycleOwner) {
+            firstNameEditText.setText(it)
+        }
+
+        viewModel.lastName.observe(viewLifecycleOwner) {
+            lastNameEditText.setText(it)
+        }
+
+        viewModel.birthDate.observe(viewLifecycleOwner) {
+            birthDateEditText.setText(it)
+        }
+
+        nextBtn.setOnClickListener {
+            // Сохраняем данные из EditText в LiveData
+            viewModel.firstName.value = firstNameEditText.text.toString()
+            viewModel.lastName.value = lastNameEditText.text.toString()
+            viewModel.birthDate.value = birthDateEditText.text.toString()
+
+            // Выполняем валидацию и сохраняем данные в кэш
+            if (viewModel.validateInput()) {
+                viewModel.saveData()
+                // Можно добавить уведомление об успешном сохранении
+            } else {
+                // Обработка ошибки валидации (например, показать сообщение пользователю)
+            }
+        }
     }
+
 }
