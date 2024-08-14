@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.textfield.TextInputEditText
@@ -49,17 +50,17 @@ class Fragment1 : Fragment() {
         nextBtn = view.findViewById(R.id.fragment1Btn)
 
         // Устанавливаем наблюдателей для LiveData
-        viewModel.firstName.observe(viewLifecycleOwner) {
-            firstNameEditText.setText(it)
-        }
-
-        viewModel.lastName.observe(viewLifecycleOwner) {
-            lastNameEditText.setText(it)
-        }
-
-        viewModel.birthDate.observe(viewLifecycleOwner) {
-            birthDateEditText.setText(it)
-        }
+//        viewModel.firstName.observe(viewLifecycleOwner) {
+//            firstNameEditText.setText(it)
+//        }
+//
+//        viewModel.lastName.observe(viewLifecycleOwner) {
+//            lastNameEditText.setText(it)
+//        }
+//
+//        viewModel.birthDate.observe(viewLifecycleOwner) {
+//            birthDateEditText.setText(it)
+//        }
 
         nextBtn.setOnClickListener {
             // Сохраняем данные из EditText в LiveData
@@ -70,6 +71,9 @@ class Fragment1 : Fragment() {
             // Выполняем валидацию и сохраняем данные в кэш
             if (viewModel.validateInput()) {
                 viewModel.saveData()
+                Toast.makeText(context, viewModel.firstName.value +
+                        viewModel.lastName.value + viewModel.birthDate.value, Toast.LENGTH_SHORT).show()
+
                 // Можно добавить уведомление об успешном сохранении
             } else {
                 // Обработка ошибки валидации (например, показать сообщение пользователю)
