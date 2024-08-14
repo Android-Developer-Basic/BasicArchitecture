@@ -2,6 +2,8 @@ package ru.otus.basicarchitecture.ui.fragments
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -53,7 +55,32 @@ class Fragment1 : Fragment() {
         nextBtn = view.findViewById(R.id.fragment1Btn)
         toast = view.findViewById(R.id.toast)
 
-        birthDateEditText.setMask("99.99.9999")
+        birthDateEditText.addTextChangedListener(object : TextWatcher {
+            private var isEditing = false
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                if (isEditing) return
+
+                isEditing = true
+                val input = s.toString().replace("/", "")
+                val formatted = StringBuilder()
+
+                for (i in input.indices) {
+                    if (i == 2 || i == 4) {
+                        formatted.append("/")
+                    }
+                    formatted.append(input[i])
+                }
+
+                birthDateEditText.setText(formatted.toString())
+                birthDateEditText.setSelection(formatted.length)
+                isEditing = false
+            }
+        })
 
 
 
