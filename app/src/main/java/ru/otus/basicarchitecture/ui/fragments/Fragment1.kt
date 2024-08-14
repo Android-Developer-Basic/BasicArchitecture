@@ -82,8 +82,6 @@ class Fragment1 : Fragment() {
             }
         })
 
-
-
         nextBtn.setOnClickListener {
             // Сохраняем данные из EditText в LiveData
             viewModel.firstName.value = firstNameEditText.text.toString()
