@@ -2,6 +2,7 @@ package ru.otus.basicarchitecture.ui.fragments
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.R
@@ -33,6 +35,8 @@ class Fragment1 : Fragment() {
     private lateinit var birthDateEditText: EditText
     private lateinit var nextBtn: Button
 
+    private lateinit var toast: View
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,6 +51,9 @@ class Fragment1 : Fragment() {
         lastNameEditText = view.findViewById(R.id.surname)
         birthDateEditText = view.findViewById(R.id.birthdate)
         nextBtn = view.findViewById(R.id.fragment1Btn)
+        toast = view.findViewById(R.id.toast)
+
+
 
         nextBtn.setOnClickListener {
             // Сохраняем данные из EditText в LiveData
@@ -67,7 +74,7 @@ class Fragment1 : Fragment() {
 
                 // Можно добавить уведомление об успешном сохранении
             } else {
-                // Обработка ошибки валидации (например, показать сообщение пользователю)
+                Snackbar.make(toast, "Валидация не пройдена", Snackbar.LENGTH_SHORT).show()
             }
         }
     }
