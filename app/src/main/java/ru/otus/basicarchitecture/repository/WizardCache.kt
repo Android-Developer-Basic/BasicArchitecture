@@ -10,4 +10,5 @@ class WizardCache @Inject constructor() {
     var city: String? = null
     var address: String? = null
     var interests: List<String> = emptyList()
+
 }
