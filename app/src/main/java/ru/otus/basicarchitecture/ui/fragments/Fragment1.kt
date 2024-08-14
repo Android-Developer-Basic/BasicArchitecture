@@ -37,8 +37,7 @@ class Fragment1 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.fragment_fragment1, container, false)
-        return view
+        return inflater.inflate(R.layout.fragment_fragment1, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,19 +47,6 @@ class Fragment1 : Fragment() {
         lastNameEditText = view.findViewById(R.id.surname)
         birthDateEditText = view.findViewById(R.id.birthdate)
         nextBtn = view.findViewById(R.id.fragment1Btn)
-
-        // Устанавливаем наблюдателей для LiveData
-//        viewModel.firstName.observe(viewLifecycleOwner) {
-//            firstNameEditText.setText(it)
-//        }
-//
-//        viewModel.lastName.observe(viewLifecycleOwner) {
-//            lastNameEditText.setText(it)
-//        }
-//
-//        viewModel.birthDate.observe(viewLifecycleOwner) {
-//            birthDateEditText.setText(it)
-//        }
 
         nextBtn.setOnClickListener {
             // Сохраняем данные из EditText в LiveData
@@ -75,7 +61,7 @@ class Fragment1 : Fragment() {
                     .replace(R.id.fragment_container, Fragment2())
                     .addToBackStack(null)
                     .commit()
-                
+
 //                Toast.makeText(context, viewModel.firstName.value +
 //                        viewModel.lastName.value + viewModel.birthDate.value, Toast.LENGTH_SHORT).show()
 
