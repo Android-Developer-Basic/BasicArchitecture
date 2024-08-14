@@ -71,8 +71,13 @@ class Fragment1 : Fragment() {
             // Выполняем валидацию и сохраняем данные в кэш
             if (viewModel.validateInput()) {
                 viewModel.saveData()
-                Toast.makeText(context, viewModel.firstName.value +
-                        viewModel.lastName.value + viewModel.birthDate.value, Toast.LENGTH_SHORT).show()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, Fragment2())
+                    .addToBackStack(null)
+                    .commit()
+                
+//                Toast.makeText(context, viewModel.firstName.value +
+//                        viewModel.lastName.value + viewModel.birthDate.value, Toast.LENGTH_SHORT).show()
 
                 // Можно добавить уведомление об успешном сохранении
             } else {
