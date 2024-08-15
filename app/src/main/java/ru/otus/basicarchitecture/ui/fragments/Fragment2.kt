@@ -11,12 +11,10 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.R
 import ru.otus.basicarchitecture.viewmodels.Fragment2ViewModel
-import ru.otus.basicarchitecture.viewmodels.MainViewModel
 
 @AndroidEntryPoint
 class Fragment2 : Fragment() {
@@ -79,19 +77,16 @@ class Fragment2 : Fragment() {
         addressEditText.addTextChangedListener { viewModel.address.value = it.toString() }
 
         nextBtn.setOnClickListener {
-            // Сохраняем данные из EditText в LiveData
             viewModel.country.value = countryEditText.text.toString()
             viewModel.city.value = cityEditText.text.toString()
             viewModel.address.value = addressEditText.text.toString()
 
-            // Выполняем валидацию и сохраняем данные в кэш
             if (nextBtn.isEnabled) {
                 viewModel.saveData()
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, Fragment3())
                     .addToBackStack(null)
                     .commit()
-                // Здесь можно перейти на следующий фрагмент или завершить процесс анкеты
             } else {
                 Snackbar.make(toast, "Валидация не пройдена", Snackbar.LENGTH_SHORT).show()
             }

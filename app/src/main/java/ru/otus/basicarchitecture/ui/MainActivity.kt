@@ -10,8 +10,6 @@ import ru.otus.basicarchitecture.R
 import ru.otus.basicarchitecture.viewmodels.MainViewModel
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
-        transaction.addToBackStack("null") // Добавляем в стек для навигации
+        transaction.addToBackStack("null")
         transaction.commit()
     }
 

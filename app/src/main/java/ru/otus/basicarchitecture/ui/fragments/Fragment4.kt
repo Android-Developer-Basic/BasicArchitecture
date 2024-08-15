@@ -43,7 +43,6 @@ class Fragment4 : Fragment() {
         birthDateTextView.text = viewModel.birthDate ?: "N/A"
         addressTextView.text = viewModel.fullAddress
 
-        // Отобразить интересы
         viewModel.interests.forEach { interest ->
             val tagView = createTagView(interest)
             tagFlexboxLayout.addView(tagView)

@@ -92,7 +92,6 @@ class Fragment1 : Fragment() {
             viewModel.lastName.value = lastNameEditText.text.toString()
             viewModel.birthDate.value = birthDateEditText.text.toString()
 
-            // Выполняем валидацию и сохраняем данные в кэш
             if (nextBtn.isEnabled) {
                 viewModel.saveData()
                 parentFragmentManager.beginTransaction()
