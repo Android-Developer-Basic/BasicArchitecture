@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 object DadataApiService {
     private const val BASE_URL = "https://suggestions.dadata.ru/"
-    private const val API_KEY = "8fa10df494b20be347e86fb921643f852a13cc07" // Ваш API ключ Dadata
+    private const val API_KEY = "8fa10df494b20be347e86fb921643f852a13cc07"
 
     private val client: OkHttpClient by lazy {
         val loggingInterceptor = HttpLoggingInterceptor().apply {

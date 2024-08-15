@@ -10,8 +10,7 @@ import ru.otus.basicarchitecture.repository.WizardCache
 import javax.inject.Singleton
 
 @HiltAndroidApp
-class MyApplication : Application() {
-}
+class MyApplication : Application()
 
 @InstallIn(SingletonComponent::class)
 @Module
