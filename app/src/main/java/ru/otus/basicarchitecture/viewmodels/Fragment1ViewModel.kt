@@ -23,7 +23,6 @@ class Fragment1ViewModel @Inject constructor(private val wizardCache: WizardCach
     val isFormValid: LiveData<Boolean> get() = _isFormValid
 
     init {
-
         firstName.observeForever { validateForm() }
         lastName.observeForever { validateForm() }
         birthDate.observeForever { validateForm() }

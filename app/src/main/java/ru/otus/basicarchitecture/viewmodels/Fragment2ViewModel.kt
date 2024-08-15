@@ -1,39 +1,55 @@
 package ru.otus.basicarchitecture.viewmodels
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import ru.otus.basicarchitecture.network.AddressSuggestionRequest
+import ru.otus.basicarchitecture.network.DadataApiService
 import ru.otus.basicarchitecture.repository.WizardCache
 import javax.inject.Inject
-@RequiresApi(Build.VERSION_CODES.O)
+
 @HiltViewModel
 class Fragment2ViewModel @Inject constructor(private val wizardCache: WizardCache) : ViewModel() {
-    val country = MutableLiveData<String>()
-    val city = MutableLiveData<String>()
-    val address = MutableLiveData<String>()
 
+    val address = MutableLiveData<String>()
     private val _isFormValid = MutableLiveData<Boolean>()
     val isFormValid: LiveData<Boolean> get() = _isFormValid
 
+    private val _addressSuggestions = MutableLiveData<List<String>>()
+    val addressSuggestions: LiveData<List<String>> get() = _addressSuggestions
+
     init {
-        country.observeForever { validateForm() }
-        city.observeForever { validateForm() }
         address.observeForever { validateForm() }
     }
 
     private fun validateForm() {
-        val isCountryValid = !country.value.isNullOrBlank()
-        val isCityValid = !city.value.isNullOrBlank()
         val isAddressValid = !address.value.isNullOrBlank()
-        _isFormValid.value = isCountryValid && isCityValid && isAddressValid
+        _isFormValid.value = isAddressValid
+    }
+
+    fun fetchAddressSuggestions(query: String) {
+        if (query.isBlank()) {
+            _addressSuggestions.value = emptyList()
+            return
+        }
+
+        viewModelScope.launch {
+            try {
+                val response = DadataApiService.api.getAddressSuggestions(AddressSuggestionRequest(query))
+                _addressSuggestions.value = response.suggestions.map { it.value }
+            } catch (e: Exception) {
+                _addressSuggestions.value = emptyList()
+            }
+        }
     }
 
     fun saveData() {
-        wizardCache.country = country.value
-        wizardCache.city = city.value
-        wizardCache.address = address.value
+        val addressParts = address.value?.split(",")?.map { it.trim() }
+        wizardCache.country = addressParts?.getOrNull(0)
+        wizardCache.city = addressParts?.getOrNull(1)
+        wizardCache.address = addressParts?.getOrNull(2)
     }
 }
