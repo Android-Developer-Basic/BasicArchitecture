@@ -5,7 +5,7 @@
     android:padding="8dp"
     android:drawablePadding="4dp"
     android:textColor="?android:attr/textColorSecondary"
-    android:textSize="24sp"
+    android:textSize="20sp"
     android:layout_margin="4dp"
     android:background="@drawable/selector_tag_background"
     android:clickable="true"

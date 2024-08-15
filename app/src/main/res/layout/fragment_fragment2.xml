@@ -10,7 +10,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/addressEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="54dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
@@ -23,9 +23,8 @@
         <AutoCompleteTextView
             android:id="@+id/address"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:maxLines="1"/>
+            android:layout_height="54dp"
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
