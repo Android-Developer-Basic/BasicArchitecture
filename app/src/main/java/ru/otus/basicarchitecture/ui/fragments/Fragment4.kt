@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.flexbox.FlexboxLayout
 import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.R
-import ru.otus.basicarchitecture.model.Tag
 import ru.otus.basicarchitecture.viewmodels.Fragment3ViewModel
 
 @AndroidEntryPoint
