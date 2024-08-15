@@ -17,7 +17,7 @@ import ru.otus.basicarchitecture.model.Tag
 import ru.otus.basicarchitecture.viewmodels.Fragment3ViewModel
 
 @AndroidEntryPoint
-class Fragment3 : Fragment() {
+class Fragment4 : Fragment() {
     private val viewModel: Fragment3ViewModel by viewModels()
 
     private lateinit var tagFlexboxLayout: FlexboxLayout
@@ -27,7 +27,7 @@ class Fragment3 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_fragment3, container, false)
+        return inflater.inflate(R.layout.fragment_fragment1, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

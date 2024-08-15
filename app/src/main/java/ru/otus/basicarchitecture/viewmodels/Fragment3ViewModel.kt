@@ -3,32 +3,43 @@ package ru.otus.basicarchitecture.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ru.otus.basicarchitecture.model.Tag
 import ru.otus.basicarchitecture.repository.TagRepository
+import ru.otus.basicarchitecture.repository.WizardCache
+import javax.inject.Inject
 
-class Fragment3ViewModel : ViewModel() {
-    private val repository = TagRepository()
+@HiltViewModel
+class Fragment3ViewModel @Inject constructor(
+    private val wizardCache: WizardCache
+) : ViewModel() {
 
-    private val _tags = MutableLiveData<List<Tag>>()
-    val tags: LiveData<List<Tag>> get() = _tags
+    private val _interests = listOf(
+        "Sport", "Music", "Travel", "Reading", "Movies", "Games", "Cooking", "Art"
+    )
 
-    private val _selectedTags = MutableLiveData<Set<Tag>>(setOf())
-    val selectedTags: LiveData<Set<Tag>> get() = _selectedTags
+    private val _selectedInterests = MutableLiveData<Set<String>>()
+    val selectedInterests: LiveData<Set<String>> get() = _selectedInterests
+
+    val interests: List<String> get() = _interests
 
     init {
-        loadTags()
+        _selectedInterests.value = emptySet()
     }
 
-    private fun loadTags() {
-        _tags.value = repository.getTags()
+    fun toggleInterest(interest: String) {
+        _selectedInterests.value = _selectedInterests.value?.let {
+            if (it.contains(interest)) {
+                it - interest
+            } else {
+                it + interest
+            }
+        }
     }
 
-    fun toggleTagSelection(tag: Tag) {
-        val currentSelection = _selectedTags.value ?: setOf()
-        if (currentSelection.contains(tag)) {
-            _selectedTags.value = currentSelection - tag
-        } else {
-            _selectedTags.value = currentSelection + tag
+    fun saveSelectedInterests() {
+        _selectedInterests.value?.let {
+            wizardCache.setInterests(it)
         }
     }
 }

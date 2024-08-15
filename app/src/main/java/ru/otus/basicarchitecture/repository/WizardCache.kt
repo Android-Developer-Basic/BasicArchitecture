@@ -11,4 +11,8 @@ class WizardCache @Inject constructor() {
     var address: String? = null
     var interests: List<String> = emptyList()
 
+    fun setInterests(interests: Set<String>) {
+        this.interests = interests.toList()
+    }
+
 }
