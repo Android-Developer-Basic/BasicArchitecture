@@ -11,13 +11,10 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.R
 import ru.otus.basicarchitecture.viewmodels.Fragment1ViewModel
-import ru.otus.basicarchitecture.viewmodels.ViewState
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -91,7 +88,6 @@ class Fragment1 : Fragment() {
         birthDateEditText.addTextChangedListener { viewModel.birthDate.value = it.toString() }
 
         nextBtn.setOnClickListener {
-            // Сохраняем данные из EditText в LiveData
             viewModel.firstName.value = firstNameEditText.text.toString()
             viewModel.lastName.value = lastNameEditText.text.toString()
             viewModel.birthDate.value = birthDateEditText.text.toString()
