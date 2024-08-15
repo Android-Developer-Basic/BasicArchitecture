@@ -45,7 +45,6 @@ class Fragment3 : Fragment() {
                 .commit()
         }
 
-        // Добавить теги в FlexboxLayout
         viewModel.interests.forEach { interest ->
             val tagView = createTagView(interest)
             tagView.setOnClickListener {
