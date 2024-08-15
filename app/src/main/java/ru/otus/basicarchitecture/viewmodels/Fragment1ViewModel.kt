@@ -27,9 +27,6 @@ class Fragment1ViewModel @Inject constructor(private val wizardCache: WizardCach
     val isFormValid: LiveData<Boolean> get() = _isFormValid
 
     init {
-        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-        val today = LocalDate.now()
-
         firstName.observeForever { validateForm() }
         lastName.observeForever { validateForm() }
         birthDate.observeForever { validateForm() }
@@ -58,7 +55,6 @@ class Fragment1ViewModel @Inject constructor(private val wizardCache: WizardCach
     }
 
     fun validateInput(): Boolean {
-        // Валидация имени, фамилии и возраста
         return !firstName.value.isNullOrEmpty() && !lastName.value.isNullOrEmpty() && isAgeValid(birthDate.value)
     }
 

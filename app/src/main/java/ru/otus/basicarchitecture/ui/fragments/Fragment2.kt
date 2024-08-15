@@ -42,17 +42,21 @@ class Fragment2 : Fragment() {
         nextBtn = view.findViewById(R.id.fragment2Btn)
         toast = view.findViewById(R.id.toast)
 
-        viewModel.isFormValid.observe(viewLifecycleOwner, Observer { isValid ->
+        viewModel.isFormValid.observe(viewLifecycleOwner) { isValid ->
             nextBtn.isEnabled = isValid
-        })
+        }
 
-        viewModel.addressSuggestions.observe(viewLifecycleOwner, Observer { suggestions ->
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, suggestions)
+        viewModel.addressSuggestions.observe(viewLifecycleOwner) { suggestions ->
+            val adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                suggestions
+            )
             addressEditText.setAdapter(adapter)
-            if(suggestions.isNotEmpty()) {
+            if (suggestions.isNotEmpty()) {
                 addressEditText.showDropDown()
             }
-        })
+        }
 
         addressEditText.addTextChangedListener {
             viewModel.address.value = it.toString()
@@ -60,17 +64,13 @@ class Fragment2 : Fragment() {
         }
 
         nextBtn.setOnClickListener {
-            // Сохраняем данные из EditText в LiveData
             viewModel.address.value = addressEditText.text.toString()
-
-            // Выполняем валидацию и сохраняем данные в кэш
             if (nextBtn.isEnabled) {
                 viewModel.saveData()
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, Fragment3())
                     .addToBackStack(null)
                     .commit()
-                // Здесь можно перейти на следующий фрагмент или завершить процесс анкеты
             } else {
                 Snackbar.make(toast, "Валидация не пройдена", Snackbar.LENGTH_SHORT).show()
             }

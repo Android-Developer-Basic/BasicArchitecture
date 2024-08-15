@@ -41,7 +41,6 @@ class Fragment2ViewModel @Inject constructor(private val wizardCache: WizardCach
                 val response = DadataApiService.api.getAddressSuggestions(AddressSuggestionRequest(query))
                 _addressSuggestions.value = response.suggestions.map { it.value }
             } catch (e: Exception) {
-                // Обработка ошибок если необходимо
                 _addressSuggestions.value = emptyList()
             }
         }
