@@ -24,10 +24,6 @@ import java.time.temporal.ChronoUnit
 
 @AndroidEntryPoint
 class Fragment1 : Fragment() {
-
-    private val _state = MutableLiveData<ViewState>()
-    val viewState: LiveData<ViewState> = _state
-
     private val viewModel: Fragment1ViewModel by viewModels()
 
     private lateinit var firstNameEditText: EditText
