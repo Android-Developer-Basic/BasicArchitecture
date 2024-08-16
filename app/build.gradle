@@ -7,7 +7,11 @@ plugins {
 
 android {
     namespace 'ru.otus.basicarchitecture'
-    compileSdk 34
+    compileSdk 33
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId "ru.otus.basicarchitecture"
@@ -17,6 +21,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "DADATA_API_KEY", "\"${project.DADATA_API_KEY}\"")
     }
 
     buildTypes {

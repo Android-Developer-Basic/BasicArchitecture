@@ -5,11 +5,12 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.otus.basicarchitecture.BuildConfig
 import java.util.concurrent.TimeUnit
 
 object DadataApiService {
     private const val BASE_URL = "https://suggestions.dadata.ru/"
-    private const val API_KEY = "8fa10df494b20be347e86fb921643f852a13cc07"
+    private const val API_KEY = BuildConfig.DADATA_API_KEY
 
     private val client: OkHttpClient by lazy {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
