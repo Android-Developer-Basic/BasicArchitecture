@@ -1,5 +1,6 @@
 package ru.otus.basicarchitecture.presentation.summaryFragment
 
+import SummaryViewModel
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,25 +8,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.otus.basicarchitecture.R
+import ru.otus.basicarchitecture.databinding.FragmentSummaryBinding
 
 class SummaryFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = SummaryFragment()
-    }
+    private var _binding: FragmentSummaryBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: SummaryViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_summary, container, false)
+        _binding = FragmentSummaryBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Устанавливаем данные из ViewModel в UI
+        binding.textViewName.text = viewModel.getName()
+        binding.textViewSurname.text = viewModel.getSurname()
+        binding.textViewDateOfBirth.text = viewModel.getDateOfBirth()
+        binding.textViewAddress.text = viewModel.getFullAddress()
+        binding.textViewInterests.text = viewModel.getInterestsAsString()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
