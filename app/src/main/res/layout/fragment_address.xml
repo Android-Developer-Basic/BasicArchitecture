@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/countryEditText"
+        android:id="@+id/editTextCountry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Country" />
+        android:hint="Country"
+        android:inputType="text" />
 
     <EditText
-        android:id="@+id/cityEditText"
+        android:id="@+id/editTextCity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="City" />
+        android:hint="City"
+        android:inputType="text"
+        android:layout_marginTop="16dp"/>
 
     <EditText
-        android:id="@+id/streetEditText"
+        android:id="@+id/editTextAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Street" />
-
-    <EditText
-        android:id="@+id/houseNumberEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="House Number" />
+        android:hint="Address (Street, House Number)"
+        android:inputType="text"
+        android:layout_marginTop="16dp"/>
 
     <Button
-        android:id="@+id/nextButton"
+        android:id="@+id/buttonNext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Next" />
-
+        android:text="Next"
+        android:layout_marginTop="24dp"/>
 </LinearLayout>
