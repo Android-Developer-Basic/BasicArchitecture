@@ -1,15 +1,15 @@
 package ru.otus.basicarchitecture.presentation.summaryFragment
 
-import SummaryViewModel
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ru.otus.basicarchitecture.R
+import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.databinding.FragmentSummaryBinding
 
+@AndroidEntryPoint
 class SummaryFragment : Fragment() {
 
     private var _binding: FragmentSummaryBinding? = null

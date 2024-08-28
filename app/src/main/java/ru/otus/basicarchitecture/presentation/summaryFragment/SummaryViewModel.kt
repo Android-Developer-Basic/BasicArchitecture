@@ -1,3 +1,5 @@
+package ru.otus.basicarchitecture.presentation.summaryFragment
+
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ru.otus.basicarchitecture.repository.WizardCache
@@ -21,10 +23,10 @@ class SummaryViewModel @Inject constructor(
     }
 
     fun getFullAddress(): String {
-        return "${wizardCache.address}, ${wizardCache.city}, ${wizardCache.country}"
+        return "${wizardCache.address ?: "Unknown Address"}, ${wizardCache.city ?: "Unknown City"}, ${wizardCache.country ?: "Unknown Country"}"
     }
 
     fun getInterestsAsString(): String {
-        return wizardCache.interests.joinToString(", ")
+        return wizardCache.interests?.joinToString(", ") ?: "No Interests"
     }
 }

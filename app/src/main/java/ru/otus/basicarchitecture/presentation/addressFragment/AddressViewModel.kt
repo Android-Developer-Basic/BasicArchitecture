@@ -1,15 +1,21 @@
+package ru.otus.basicarchitecture.presentation.addressFragment
+
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import retrofit2.HttpException
+import ru.otus.basicarchitecture.network.RetrofitClient
+import ru.otus.basicarchitecture.network.SuggestRequest
 import ru.otus.basicarchitecture.repository.WizardCache
 import javax.inject.Inject
 
 @HiltViewModel
 class AddressViewModel @Inject constructor(
     private val wizardCache: WizardCache,
-    private val daDataApi: DaDataApi
 ) : ViewModel() {
+
+    // Получаем экземпляр DaDataApi через RetrofitClient
+    private val daDataApi = RetrofitClient.instance
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main + Job())
 

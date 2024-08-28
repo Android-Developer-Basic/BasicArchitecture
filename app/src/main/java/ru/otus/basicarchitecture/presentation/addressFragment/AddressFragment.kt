@@ -1,3 +1,5 @@
+package ru.otus.basicarchitecture.presentation.addressFragment
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +37,7 @@ class AddressFragment : Fragment() {
 
         binding.autoCompleteTextViewAddress.addTextChangedListener { text ->
             val query = text.toString()
-            if (query.length > 3) {
+            if (query.length < 3) {
                 viewModel.fetchAddressSuggestions(query) { suggestions ->
                     adapter.clear()
                     adapter.addAll(suggestions)
