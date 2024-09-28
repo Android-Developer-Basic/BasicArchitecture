@@ -11,10 +11,12 @@ android {
 
     defaultConfig {
         applicationId "ru.otus.basicarchitecture"
-        minSdk 24
+        minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
+
+        buildConfigField("String", "DADATA_API_KEY", "\"${project.DADATA_API_KEY}\"")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,8 +34,9 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-    viewBinding {
-        enabled true
+    buildFeatures {
+        buildConfig = true
+        viewBinding = true
     }
     kapt {
         correctErrorTypes true
@@ -45,6 +48,13 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6'
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
 
     implementation 'com.google.dagger:hilt-android:2.52'
     kapt 'com.google.dagger:hilt-compiler:2.52'

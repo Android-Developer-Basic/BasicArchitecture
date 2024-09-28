@@ -1,13 +1,14 @@
 package ru.otus.basicarchitecture.presentation.viewModel
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import ru.otus.basicarchitecture.data.WizardCache
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import javax.inject.Inject
 
-class PersonViewModel @Inject constructor(private val wizardCache: WizardCache) {
+class PersonViewModel @Inject constructor(private val wizardCache: WizardCache) : ViewModel() {
 
     val name = MutableLiveData<String>()
     val surname = MutableLiveData<String>()

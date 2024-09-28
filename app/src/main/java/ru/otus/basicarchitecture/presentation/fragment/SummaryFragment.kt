@@ -32,7 +32,7 @@ class SummaryFragment : Fragment() {
         binding.nameInfo.text = viewModel.name
         binding.surnameInfo.text = viewModel.surname
         binding.birthDateInfo.text = viewModel.dateOfBirth
-        binding.addressInfo.text = viewModel.fullAddress
+        binding.addressInfo.text = viewModel.address
 
         viewModel.interests.forEach {
             Chip(context).apply {

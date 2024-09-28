@@ -8,8 +8,6 @@ class WizardCache @Inject constructor() {
     var name: String = ""
     var surname: String = ""
     var dateOfBirth: String = ""
-    var country: String = ""
-    var city: String = ""
     var address: String = ""
     var interests: List<String> = listOf()
 }

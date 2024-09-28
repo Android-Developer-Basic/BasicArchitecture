@@ -9,8 +9,7 @@ import javax.inject.Inject
 
 class InterestsViewModel @Inject constructor(
     private val wizardCache: WizardCache, interestsList: InterestsList
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val _interests = MutableLiveData(interestsList.interests)
     val interests: LiveData<List<String>> = _interests

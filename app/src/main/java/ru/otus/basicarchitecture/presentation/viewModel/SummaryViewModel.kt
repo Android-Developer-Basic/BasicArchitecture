@@ -9,8 +9,6 @@ class SummaryViewModel @Inject constructor(private val wizardCache: WizardCache)
     val name = wizardCache.name
     val surname = wizardCache.surname
     val dateOfBirth = wizardCache.dateOfBirth
+    val address = wizardCache.address
     val interests: List<String> get() = wizardCache.interests
-
-    val fullAddress =
-        listOf(wizardCache.country, wizardCache.city, wizardCache.address).joinToString(" ")
 }
