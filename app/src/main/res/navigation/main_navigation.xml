@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/authorizationFragment">
+
+    <fragment
+        android:id="@+id/authorizationFragment"
+        android:name="ru.otus.basicarchitecture.ui.authorization.AuthorizationFragment"
+        android:label="fragment_authorization"
+        tools:layout="@layout/fragment_authorization" >
+        <action
+            android:id="@+id/action_to_addressFragment"
+            app:destination="@id/addressFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="ru.otus.basicarchitecture.ui.address.AddressFragment"
+        android:label="fragment_address"
+        tools:layout="@layout/fragment_address" >
+        <action
+            android:id="@+id/action_to_interestsFragment"
+            app:destination="@id/interestsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/interestsFragment"
+        android:name="ru.otus.basicarchitecture.ui.interests.InterestsFragment"
+        android:label="fragment_interests"
+        tools:layout="@layout/fragment_interests" >
+        <action
+            android:id="@+id/action_to_personProfileFragment"
+            app:destination="@id/personProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/personProfileFragment"
+        android:name="ru.otus.basicarchitecture.ui.profile.PersonProfileFragment"
+        android:label="fragment_person_profile"
+        tools:layout="@layout/fragment_person_profile" />
+
+</navigation>
