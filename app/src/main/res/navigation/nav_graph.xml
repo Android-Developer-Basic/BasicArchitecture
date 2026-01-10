@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/stepOneFragment">
+
+    <fragment
+        android:id="@+id/stepOneFragment"
+        android:name="ru.otus.basicarchitecture.ui.StepOneFragment"
+        android:label="Step 1"
+        tools:layout="@layout/fragment_step_one">
+        <action
+            android:id="@+id/action_stepOne_to_stepTwo"
+            app:destination="@id/stepTwoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/stepTwoFragment"
+        android:name="ru.otus.basicarchitecture.ui.StepTwoFragment"
+        android:label="Step 2"
+        tools:layout="@layout/fragment_step_two">
+        <action
+            android:id="@+id/action_stepTwo_to_stepThree"
+            app:destination="@id/stepThreeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/stepThreeFragment"
+        android:name="ru.otus.basicarchitecture.ui.StepThreeFragment"
+        android:label="Step 3"
+        tools:layout="@layout/fragment_step_three">
+        <action
+            android:id="@+id/action_stepThree_to_stepFour"
+            app:destination="@id/stepFourFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/stepFourFragment"
+        android:name="ru.otus.basicarchitecture.ui.StepFourFragment"
+        android:label="Summary"
+        tools:layout="@layout/fragment_step_four" />
+
+</navigation>
