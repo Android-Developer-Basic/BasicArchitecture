@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/stepOneFragment"
-        android:name="ru.otus.basicarchitecture.ui.StepOneFragment"
+        android:name="ru.otus.basicarchitecture.ui.steps.StepOneFragment"
         android:label="Step 1"
         tools:layout="@layout/fragment_step_one">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/stepTwoFragment"
-        android:name="ru.otus.basicarchitecture.ui.StepTwoFragment"
+        android:name="ru.otus.basicarchitecture.ui.steps.StepTwoFragment"
         android:label="Step 2"
         tools:layout="@layout/fragment_step_two">
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/stepThreeFragment"
-        android:name="ru.otus.basicarchitecture.ui.StepThreeFragment"
+        android:name="ru.otus.basicarchitecture.ui.steps.StepThreeFragment"
         android:label="Step 3"
         tools:layout="@layout/fragment_step_three">
         <action
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/stepFourFragment"
-        android:name="ru.otus.basicarchitecture.ui.StepFourFragment"
+        android:name="ru.otus.basicarchitecture.ui.steps.StepFourFragment"
         android:label="Summary"
         tools:layout="@layout/fragment_step_four" />
 

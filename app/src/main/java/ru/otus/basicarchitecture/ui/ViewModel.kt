@@ -13,6 +13,7 @@ import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
+import ru.otus.basicarchitecture.data.AddressRepository
 
 // StepOneViewModel
 // region
@@ -78,19 +79,28 @@ class StepOneViewModel @Inject constructor(
 // region
 @HiltViewModel
 class StepTwoViewModel @Inject constructor(
-    private val wizardCache: WizardCache
+    private val repository: AddressRepository, private val wizardCache: WizardCache
 ) : ViewModel() {
+
+    private val _suggestions = MutableStateFlow<List<String>>(emptyList())
+    val suggestions: StateFlow<List<String>> = _suggestions
 
     private val _isNextButtonEnabled = MutableStateFlow(false)
     val isNextButtonEnabled: StateFlow<Boolean> = _isNextButtonEnabled
 
-    fun validate(country: String, city: String, address: String) {
-        _isNextButtonEnabled.value =
-            country.isNotBlank() && city.isNotBlank() && address.isNotBlank()
+    fun onAddressInputChanged(query: String) {
+        _isNextButtonEnabled.value = query.isNotBlank() && query.length > 5
     }
 
-    fun onNextClicked(country: String, city: String, address: String) {
-        wizardCache.updateAddress(country, city, address)
+    fun getSuggestions(query: String) {
+        viewModelScope.launch {
+            val list = repository.getSuggestions(query)
+            _suggestions.value = list
+        }
+    }
+
+    fun onNextClicked(fullAddress: String) {
+        wizardCache.updateAddress("", "", fullAddress)
     }
 }
 // endregion
@@ -107,15 +117,6 @@ class StepThreeViewModel @Inject constructor(
 
     private val _isNextButtonEnabled = MutableStateFlow(false)
     val isNextButtonEnabled: StateFlow<Boolean> = _isNextButtonEnabled
-
-    fun toggleInterest(interest: String) {
-        if (selectedInterests.contains(interest)) {
-            selectedInterests.remove(interest)
-        } else {
-            selectedInterests.add(interest)
-        }
-        _isNextButtonEnabled.value = selectedInterests.isNotEmpty()
-    }
 
     fun onInterestChanged(interest: String, isSelected: Boolean) {
         if (isSelected) {
@@ -140,7 +141,7 @@ class StepFourViewModel @Inject constructor(
     wizardCache: WizardCache
 ) : ViewModel() {
     val birthDate = wizardCache.birthDate
-    val fullAddress = "${wizardCache.country}, ${wizardCache.city}, ${wizardCache.address}"
+    val fullAddress = "${wizardCache.country} ${wizardCache.city} ${wizardCache.address}".trim()
     val interests = wizardCache.interests
     val name = wizardCache.name
     val surname = wizardCache.surname

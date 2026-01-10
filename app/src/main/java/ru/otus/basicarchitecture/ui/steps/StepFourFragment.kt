@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture.ui
+package ru.otus.basicarchitecture.ui.steps
 
 import android.os.Bundle
 import android.util.TypedValue
@@ -10,6 +10,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.R
+import ru.otus.basicarchitecture.ui.StepFourViewModel
 
 @AndroidEntryPoint
 class StepFourFragment : Fragment(R.layout.fragment_step_four) {

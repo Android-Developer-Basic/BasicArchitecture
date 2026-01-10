@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture.ui
+package ru.otus.basicarchitecture.ui.steps
 
 import android.os.Bundle
 import android.text.Editable
@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.otus.basicarchitecture.R
+import ru.otus.basicarchitecture.ui.StepOneViewModel
 
 @AndroidEntryPoint
 class StepOneFragment : Fragment(R.layout.fragment_step_one) {
@@ -89,7 +90,6 @@ class StepOneFragment : Fragment(R.layout.fragment_step_one) {
                 launch {
                     viewModel.errorEvents.collect { message ->
                         etBirthDate.error = message
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
