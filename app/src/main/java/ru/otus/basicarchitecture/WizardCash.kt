@@ -1,0 +1,25 @@
+package ru.otus.basicarchitecture
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import javax.inject.Inject
+
+@ActivityRetainedScoped
+class WizardCache @Inject constructor(){
+    var userNameDate: UserNameDate = UserNameDate("", "", "")
+    var userAddress: UserAddress = UserAddress("", "", "", "", "", "")
+    var interests: List<String> = listOf()
+}
+
+data class UserNameDate(
+    var name: String,
+    var surname: String,
+    var birthday: String
+)
+
+data class UserAddress(
+    var country: String,
+    var city: String,
+    var street: String,
+    var house: String,
+    var block: String,
+    var fullAddress: String
+)
