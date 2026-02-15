@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture
+package ru.otus.basicarchitecture.data.network
 
 import kotlinx.serialization.Serializable
 

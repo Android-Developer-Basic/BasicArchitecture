@@ -1,18 +1,24 @@
-package ru.otus.basicarchitecture
+package ru.otus.basicarchitecture.ui
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import ru.otus.basicarchitecture.R
 
+@AndroidEntryPoint
 class AddressFragment : Fragment() {
 
     private val viewModel: AddressViewModel by viewModels()
@@ -27,8 +33,20 @@ class AddressFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val addressLayout = view.findViewById<TextInputLayout>(R.id.address_layout)
+
         val addressTextView =
             view.findViewById<AppCompatAutoCompleteTextView>(R.id.address_text_view)
+
+        val nextBtn = view.findViewById<Button>(R.id.next_btn)
+
+        addressTextView.doOnTextChanged { text, _, _, _ ->
+            if (!text.isNullOrEmpty()) {
+                addressLayout.hint = ""
+            } else {
+                addressLayout.hint = "Address"
+            }
+        }
 
         lifecycleScope.launch {
             viewModel.hints.collect { hintsList ->
@@ -68,6 +86,20 @@ class AddressFragment : Fragment() {
 
             }
         )
+
+        nextBtn.setOnClickListener {
+            viewModel.updateUserAddress(
+                address = addressTextView.text.toString()
+            )
+
+            parentFragmentManager.beginTransaction()
+                .replace(
+                    R.id.fragment_container,
+                    InterestsFragment()
+                )
+                .addToBackStack("")
+                .commit()
+        }
     }
 
 }

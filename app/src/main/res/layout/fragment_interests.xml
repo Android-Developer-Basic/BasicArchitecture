@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.InterestsFragment">
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/next_btn"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkable="true"
+            android:text="Music" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/museums"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkable="true"
+            android:text="Museums" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/modern_art"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkable="true"
+            android:text="Modern Art" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/cars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkable="true"
+            android:text="Cars" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/bicycles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkable="true"
+            android:text="Bicycles" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/parties"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkable="true"
+            android:text="Parties" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/theatre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkable="true"
+            android:text="Theatre" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkable="true"
+            android:text="Movies" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/gardening"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkable="true"
+            android:text="Gardening" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/hiking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkable="true"
+            android:text="Hiking" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/literature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkable="true"
+            android:text="Literature" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/craft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checkable="true"
+            android:text="Craft" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/next_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chip_group" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

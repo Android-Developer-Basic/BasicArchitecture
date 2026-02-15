@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization' version "2.1.0"
+    id 'com.google.devtools.ksp' version '2.1.0-1.0.29'
+    id 'com.google.dagger.hilt.android' version '2.57.1'
 }
 
 android {
@@ -16,6 +18,13 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        def properties = new Properties()
+        properties.load(rootProject.file("local.properties").newDataInputStream())
+
+        def apiKey = properties.getProperty("API_KEY") ?: ""
+        buildConfigField "String", "API_KEY", apiKey
+
     }
 
     buildTypes {
@@ -24,6 +33,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -58,4 +72,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7'
     implementation 'androidx.activity:activity-ktx:1.10.0'
     implementation 'androidx.fragment:fragment-ktx:1.8.9'
+
+    //Hilt
+    implementation 'com.google.dagger:hilt-android:2.57.1'
+    ksp 'com.google.dagger:hilt-compiler:2.57.1'
 }
