@@ -84,14 +84,14 @@ class NameFragment : Fragment() {
         nextBtn.setOnClickListener {
             val age = ageTextView.text.toString().toIntOrNull()
 
-            if (age == null || age < 18) {
+            if (!viewModel.isAgeValid(age)) {
                 nextBtn.isEnabled = false
+
                 Toast.makeText(
                     requireActivity(),
                     "Возраст меньше 18",
                     Toast.LENGTH_SHORT
                 ).show()
-
             } else {
                 nextBtn.isEnabled = true
 

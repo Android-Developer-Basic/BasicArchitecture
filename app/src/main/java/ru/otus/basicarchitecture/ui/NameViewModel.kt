@@ -10,6 +10,10 @@ class NameViewModel @Inject constructor(
     private val wizardCacheService: WizardCacheService
 ) : ViewModel() {
 
+    fun isAgeValid(age: Int?): Boolean {
+        return age != null && age >= 18
+    }
+
     fun updateUserInfo(name: String, surname: String, age: Int?) {
         wizardCacheService.updateUserPersonalInformation(
             name = name,
