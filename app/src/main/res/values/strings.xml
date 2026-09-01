@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">BasicArchitecture</string>
+    <string name="personal_title">О себе</string>
+    <string name="address_title">Адрес</string>
+    <string name="interests_title">Интересы</string>
+    <string name="summary_title">Анкета</string>
+    <string name="first_name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="birth_date">Дата рождения</string>
+    <string name="birth_date_placeholder">ДД.ММ.ГГГГ</string>
+    <string name="country">Страна</string>
+    <string name="city">Город</string>
+    <string name="street_address">Улица и дом</string>
+    <string name="interests_hint">Выберите хотя бы один интерес</string>
+    <string name="next">Далее</string>
+    <string name="required_field">Заполните поле</string>
+    <string name="invalid_date">Введите корректную дату в формате ДД.ММ.ГГГГ</string>
+    <string name="future_date">Дата рождения не может быть в будущем</string>
+    <string name="under_eighteen">Регистрация доступна с 18 лет</string>
+    <string name="not_specified">Не указано</string>
 </resources>
