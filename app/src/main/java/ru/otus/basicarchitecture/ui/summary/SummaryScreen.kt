@@ -72,9 +72,7 @@ private fun SummaryScreen(
             item {
                 SummaryItem(
                     label = stringResource(R.string.address_title),
-                    value = address?.let {
-                        listOf(it.country, it.city, it.streetAddress).joinToString(", ")
-                    } ?: notSpecified,
+                    value = address?.value ?: notSpecified,
                 )
             }
             item {

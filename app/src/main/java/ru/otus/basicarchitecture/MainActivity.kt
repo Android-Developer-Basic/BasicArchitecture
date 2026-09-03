@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 import ru.otus.basicarchitecture.ui.navigation.WizardNavHost
@@ -19,10 +22,12 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             BasicArchitectureTheme {
-                WizardNavHost(
-                    viewModelFactory = viewModelFactory,
-                    onDestinationChanged = ::updateActionBar,
-                )
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    WizardNavHost(
+                        viewModelFactory = viewModelFactory,
+                        onDestinationChanged = ::updateActionBar,
+                    )
+                }
             }
         }
     }

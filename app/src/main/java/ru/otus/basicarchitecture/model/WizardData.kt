@@ -9,10 +9,31 @@ data class PersonalInfo(
 )
 
 data class Address(
-    val country: String,
-    val city: String,
-    val streetAddress: String,
+    val value: String,
+    val unrestrictedValue: String,
+    val country: String?,
+    val city: String?,
+    val street: String?,
+    val house: String?,
 )
+
+data class AddressSuggestion(
+    val value: String,
+    val unrestrictedValue: String,
+    val country: String?,
+    val city: String?,
+    val street: String?,
+    val house: String?,
+) {
+    fun toAddress(): Address = Address(
+        value = value,
+        unrestrictedValue = unrestrictedValue,
+        country = country,
+        city = city,
+        street = street,
+        house = house,
+    )
+}
 
 data class WizardData(
     val personalInfo: PersonalInfo? = null,

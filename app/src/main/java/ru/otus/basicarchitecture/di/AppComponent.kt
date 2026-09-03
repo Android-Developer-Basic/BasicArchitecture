@@ -10,6 +10,8 @@ import ru.otus.basicarchitecture.MainActivity
 @Component(
     modules = [
         AppModule::class,
+        NetworkModule::class,
+        RepositoryModule::class,
         ViewModelModule::class,
     ],
 )
